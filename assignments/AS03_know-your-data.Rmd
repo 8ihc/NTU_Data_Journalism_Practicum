@@ -1,0 +1,470 @@
+---
+title: "AS03_Know-Your-Data"
+author: "洪嘉琪"
+editor_options: 
+  markdown: 
+    wrap: 72
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        toc_depth: 3
+        number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = 'hold', comment = '#>', error = TRUE)
+```
+
+## 作業目的:
+
+本作業旨在幫助學生熟悉如何讀取不同格式的資料檔案，並使用 **dplyr**
+套件進行資料清理、轉換、篩選與基本統計分析。學生將透過兩個實際的資料集：家庭收支調查資料與各鄉鎮市區人口密度資料，來練習資料處理的基本技巧。
+
+## PART I. 家庭收支調查
+
+這個案例將帶你分析家庭消費支出結構（按消費型態分類）。這份資料來自[家庭收支調查](https://data.gov.tw/dataset/6588)，記錄了自1976年起的家庭消費支出結構，並根據消費型態進行分類。
+
+-   (1)\~(3): 1 point
+-   (4): 1 point
+-   (5)\~(6): 1 point
+
+### (1) Read an excel file
+
+1.  首先至政府資料開放平臺上查詢「家庭消費支出結構按消費型態分」，便可找到家庭消費支出資料。點選資料資源下載網址，將檔案存至本機端，直接讀取。
+2.  透過政府資料開放平台的 URL或本機端的資料路徑，使用 `read_csv()`
+    函式將資料讀取至 R 中。
+    讀取後，列印資料的前3列，並檢查資料結構是否正確。
+
+```{r message=FALSE,warning=FALSE}
+### your code
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+library(showtext)
+library(stringr)
+
+font_add_google("Noto Sans TC", "NotoSans")
+showtext_auto()
+
+# Your code here
+df_family <- read_csv("data/AS03_家庭消費支出結構按消費型態分.csv")
+head(df_family, n=3)
+```
+
+### (2) Rename all columns
+
+1.  照以下對應修改中文變項名稱為英文：
+    -   年 -\> `year`
+    -   食品飲料及菸草-百分比 -\> `food_pct`
+    -   衣著鞋襪類-百分比 -\> `clothes_pct`
+    -   住宅服務水費瓦斯及其他燃料-百分比 -\> `housing_pct`
+    -   家具設備及家務服務-百分比 -\> `furniture_pct`
+    -   醫療保健-百分比 → `health_pct`
+    -   運輸交通及通訊-百分比 -\> `transport_pct`
+    -   休閒文化及教育消費-百分比 -\> `leisure_pct`
+    -   餐廳及旅館-百分比 -\> `restaurants_pct`
+    -   什項消費-百分比 -\> `other_pct`
+2.  刪除「合計」欄位（或選擇除了合計以外的欄位）
+3.  將處理過後的結果另存為新的 DataFrame: `df_select`
+4.  用 `tail()` 印出後五列的結果
+5.  提示：可使用dplyr套件中的動詞"select", "rename" 等
+
+```{r message=FALSE,warning=FALSE}
+
+names(df_family)
+
+df_select<- df_family %>%
+    select(
+        year = `年`,
+        food_pct = `食品飲料及菸草-百分比`,
+        clothes_pct = `衣著鞋襪類-百分比`,
+        housing_pct = `住宅服務水電瓦斯及其他燃料-百分比`,
+        furniture_pct = `家具設備及家務維護-百分比`,
+        health_pct = `醫療保健-百分比`,
+        transport_pct = `交通及資通訊-百分比`,
+        leisure_pct = `休閒、運動、文化及教育-百分比`,
+        restaurants_pct = `餐廳及住宿-百分比`,
+        finance_pct = `保險及金融服務-百分比`,
+        other_pct = `其他-百分比`)
+
+df_select %>% tail(5)
+
+### result
+# # A tibble: 5 × 10
+#    year food_pct clothes_pct housing_pct furniture_pct health_pct transport_pct leisure_pct restaurants_pct other_pct
+#   <dbl>    <dbl>       <dbl>       <dbl>         <dbl>      <dbl>         <dbl>       <dbl>           <dbl>     <dbl>
+# 1  2019     15.2        2.8         23.6          2.61       16.0          12.2        9.53            12.8      5.22
+# 2  2020     15.6        2.75        24.3          2.81       17.0          11.8        7.54            13.1      5.12
+# 3  2021     15.8        2.73        24.6          2.94       17.8          12.0        6.34            12.8      5.08
+# 4  2022     15.2        2.72        24.6          2.93       17.8          11.6        6.34            13.8      4.96
+# 5  2023     15.3        2.65        24.1          2.88       17.7          11.6        6.97            13.9      4.91
+
+```
+
+### (3) Pivot to long table
+
+1.  以 `year`
+    為主軸，將其他消費百分比的變項，由寬表格（wide-table）轉為長表格（long-table），消費種類的新欄位名稱為
+    `category` ，消費比例的新欄位名稱為 `percentage` 。
+2.  將轉為長表格後的結果另存為新的DataFrame，名為 `toplot`。
+3.  用 `head()` 印出前五列
+
+```{r}
+# Your code here
+toplot <- df_select %>%
+    pivot_longer(
+        cols = -year, # 除了 year 以外，其餘欄位都要轉
+        names_to = "category",
+        values_to = "percentage", 
+    )
+
+head(toplot)
+
+### Result should be 
+# # A tibble: 6 × 3
+#    year category      percentage
+#   <dbl> <chr>              <dbl>
+# 1  1976 food_pct           42.3 
+# 2  1976 clothes_pct         7.2 
+# 3  1976 housing_pct        22.6 
+# 4  1976 furniture_pct       3.63
+# 5  1976 health_pct          4.85
+# 6  1976 transport_pct       5.37
+```
+
+::: {#1-5-2}
+### (4) Plot
+:::
+
+用ggplot繪製出不同家戶消費比例的趨勢變化（你會用哪種圖？全部畫在一張折線圖上？還是你有更好的呈現方法？）
+
+```{r}
+# Your code here
+category_names <- c(
+    "food_pct"        = "食品飲料與菸草",
+    "clothes_pct"     = "衣著鞋襪",
+    "housing_pct"     = "住宅服務、水電瓦斯及其他燃料",
+    "furniture_pct"   = "家具設備與家務維護",
+    "health_pct"      = "醫療保健",
+    "transport_pct"   = "交通及資通訊",
+    "leisure_pct"     = "休閒、運動、文化與教育",
+    "restaurants_pct" = "餐廳與住宿",
+    "finance_pct"     = "保險與金融服務",
+    "other_pct"       = "其他"
+)
+
+
+ggplot(
+    toplot, 
+    
+    aes(x = year, 
+        y = percentage, 
+        fill = category)) +
+
+    geom_line(linewidth = 0.8) + 
+    
+    # scales = "free_y" 讓比例較小的類別（如家具）也能看清波動
+    facet_wrap(~ category, 
+               ncol = 2, 
+               scales = "free_y",
+               labeller = as_labeller(category_names)) + 
+    
+    theme_classic(
+        base_family = "NotoSans", 
+        base_size = 15) + 
+    
+    labs(
+        title = "1976-2024 台灣家戶消費支出比例趨勢分析",
+        x = "年份",
+        y = "百分比 (%)",
+        caption = "資料來源：行政院主計總處") +
+    
+    theme(
+        plot.title = element_text(face = "bold", 
+                                  size = 25, 
+                                  margin = margin(b = 15)),
+        plot.caption = element_text(color = "#666666"),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.background = element_blank(),
+        strip.text = element_text(face = "bold", size = 14)
+    )
+
+```
+
+### (5) Make news report
+
+1.  哪些類別的消費比例是逐年上升？哪些是逐年下降的？你認為為什麼？
+
+    ::: {#1-5-1}
+    **逐年上升**的類別包含醫療保健、餐廳與住宿、保險與金融服務，以及交通及資通訊。我認為**醫療保健**的持續上升可能與台灣社會高齡化趨勢密切相關，老年人口比例持續增加，慢性病照護需求隨之擴大，使醫療支出在家戶預算中佔據越來越重要的地位。另外，1995
+    年全民健保開辦後，醫療保健比例出現一波明顯跳升，顯示健保制度降低了就醫門檻，使原本因費用而延遲就醫的家庭得以增加醫療消費。在詹滿色（2006）的[〈台灣家戶消費及食品需求的結構分析─以所得分類之跨期比較〉](https://www.airitilibrary.com/Article/Detail/1011520x-200606-201309270002-201309270002-35-75)研究摘要中，也有提到「低收入戶從政府實施全民健保前的
+    1994 年，缺乏彈性的 0.40 上升至 2000 年全民健保實施五年後的 1.06」。
+
+    **餐廳與住宿**的上升則可能反映台灣外食文化與旅遊住宿的普及。**保險與金融服務**的上升則可能反映更多人開始注重理財與風險管理。**交通及資通訊**整體雖呈現上升趨勢，但細看近十年數據會發現已轉為緩步下滑。由於這個類別將「交通」與「資通訊」合併計算，兩者性質截然不同。資通訊費用的下降，我猜測可能來自台灣電信市場競爭激烈，例如中華電信於
+    2018 年母親節期間推出「499
+    吃到飽」方案，當時遠傳電信與台灣大哥也迅速跟進，引起電信業者間的價格惡性競爭。每戶的通訊支出因此縮減，拉低了整個類別的比例。
+
+    **逐年下降**的類別則包含食品飲料與菸草、衣著鞋襪，以及家具設備與家務維護。**食品飲料與菸草**的下降是經濟發展的普遍規律，即所謂「[恩格爾定律](https://zh.wikipedia.org/zh-tw/%E6%81%A9%E6%A0%BC%E5%B0%94%E5%AE%9A%E5%BE%8B)」——隨著所得提升，食物支出占總消費的比例自然下降。詹滿色（2006）的研究也指出，所得較高的家戶往往將更大比例的支出配置於服務性消費，如娛樂教育與交通運輸，而非基本飲食，這與資料所顯示的趨勢相互呼應。**衣著鞋襪**的下降則可能與成衣進口平價化、快時尚壓低均價有關。**家具設備與家務維護**的下降則可能反映租屋族增加（家具由房東提供）或整體居住空間縮水的結構性變化。
+
+    此外，**住宅服務、水電瓦斯及其他燃料**則呈現起起伏伏的趨勢，並無明確的單向走勢，可能受到能源政策、油電價格調整與補貼機制等因素交互影響，使其在各年度間波動明顯。
+    **休閒、運動、文化與教育**則呈現先增後減的特殊走勢。該類別在 1990
+    年代至 2000 年代初期隨經濟成長穩定上升，但其後緩步下滑，並在
+    COVID-19
+    疫情期間急遽下跌，反映出疫情對娛樂、旅遊與教育活動的直接衝擊。疫情趨緩後雖略有回升，但至今仍未回到疫前水準。
+    :::
+
+2.  你認為單獨觀察上升或下降的比例，可能會有什麼樣的問題？請根據這個問題，擬定你應該找什麼專家來採訪？列出專家的名字、職稱、單位和超鏈結。
+
+    <div>
+
+    因為這份資料是每一年度的整體家庭支出在各類別中的比例。**比例是相對數字**，一個類別「被壓縮」可能只是因為另一個類別（如醫療、住宅）膨脹，而非真的減少消費。舉例來說，即使食品比例從
+    42% 降到
+    15%，實際花在食品上的錢仍可能更多，但我們卻無法知道增加多少。另外，
+    這份資料是全國家戶的平均值，但**不同所得群的消費結構差異可能很大**。詹滿色（2006）的研究就有指出，低所得家戶花在食品與醫療的比例遠高於高所得家戶，所以「全國平均醫療保健支出上升」這個結論，可能對低收入家庭和高收入家庭來說意義完全不同；因此若只報導全國平均趨勢，可能會遮蔽了不同所得群體之間的結構性不平等。
+
+    如果要針對家戶支出與社會階級相關的議題進行深入探究，我希望採訪的專家為：
+
+    [陳寬政](https://www.ios.sinica.edu.tw/fellow/kuanjengchen) \|
+    中研院社會學研究所 退休研究員 \|
+    研究領域：人口學、家戶組成、社會福利、社會流動、社會計量。
+
+    [李令儀](https://sociology.ntu.edu.tw/faculty/%E6%9D%8E%E4%BB%A4%E5%84%80-ling-yee-lee/?doing_wp_cron=1774768015.6260840892791748046875)
+    \| 國立台灣大學社會學系 專案助理教授 \|
+    研究領域：文化產業研究、組織社會學、經濟社會學、文化社會學 \|
+    曾開授[消費社會學](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://nol2.aca.ntu.edu.tw/CourseSyllabusUpload/syllabus_114130549410.pdf)課程。
+
+    </div>
+
+3.  你會怎麼下這個新聞標題？
+
+    ::: {#1-5-3}
+    你花錢的方式改變了嗎？五十年間，家戶外食與醫療支出翻倍，但同樣的趨勢，窮人與富人承受的「負擔」卻不同
+    :::
+
+### (6) Add a new column
+
+-   針對「`df_selected`」這個DataFrame，以`health_pct` 為分析欄位，新增
+    `trend` 欄位。當下一年的「醫療保健-百分比」高於前一年，則在新的
+    `trend`
+    欄位中標記為「+」；如果低於或等於前一年，則標記為「-」，最後請列印前5列資料。產生`trend`欄位應該會需要用到`if_else()`函式。
+-   用`head()`印出`df_selected`中的`year`、`health_pct`與`trend`欄位的前5列。
+-   提示： 可使用dplyr套件中的`lag()`
+    函式來獲取前一年的「醫療保健-百分比」作為比較的基準。
+
+```{r message=FALSE,warning=FALSE}
+
+# Your code here
+df_select <- df_select %>%
+    mutate(
+        trend = if_else(health_pct > lag(health_pct), "+", "-")
+        )
+
+df_select %>%
+    select(year, health_pct, trend) %>%
+    head(5)
+
+### Result should be
+# A tibble: 5 × 3
+#    year health_pct trend
+#   <dbl>      <dbl> <chr>
+# 1  1976       4.85 NA   
+# 2  1977       4.26 -    
+# 3  1978       4.74 +    
+# 4  1979       4.62 -    
+# 5  1980       4.2  -    
+```
+
+## PART II. 剖析人口資料
+
+請自[政府資料開放平台的各鄉鎮市區人口密度](https://data.gov.tw/dataset/8410)，下載最新年度的各鄉鎮市區人口密度統計，其中包含site_id
+（區域別）、people_total （年底人口數）、area
+（土地面積）和population_density （人口密度）等變項。
+
+-   (1)\~(4): 1 point
+-   (5): 3 points
+
+### (1) Import a csv file
+
+請用 `read_csv()`讀取所下載的 CSV 檔案，取名為 `df_pop`，並用 `head()`
+將前 5 列印出。
+
+```{r message=FALSE,warning=FALSE}
+### your code
+df_pop <- read_csv("data/AS03_114各鄉鎮市區人口密度.csv") %>%
+    slice(-1)  # -1 是指「讀進來後的資料第一列」，也就是原始 CSV 的第二列
+
+head(df_pop, 5)
+
+### Result should be
+#  A tibble: 5 × 5
+#   statistic_yyy site_id      people_total  area population_density
+#           <dbl> <chr>        <chr>        <dbl> <chr>             
+# 1           111 新北市板橋區 549572       23.1  23753             
+# 2           111 新北市三重區 379825       16.3  23278             
+# 3           111 新北市中和區 403109       20.1  20011             
+# 4           111 新北市永和區 212170        5.71 37133             
+# 5           111 新北市新莊區 419966       19.7  21277      
+```
+
+### (2) Converting strings
+
+查看前5列資料後，你會發現有些欄位的資料型態有點奇怪，本應是數字型態的「人口數」和「人口密度」卻以字串"chr"型態出現，請將這兩欄的資料型態轉換成適合的型態，並再次將
+5 列印出
+
+```{r}
+### your code
+# str(df_pop)
+
+df_pop <- df_pop %>%
+    mutate(
+        people_total = as.integer(people_total),
+        area = as.numeric(area),
+        population_density = as.numeric(population_density)
+        )
+
+head(df_pop, 5)
+
+### Result should be
+
+# # A tibble: 5 × 5
+#   statistic_yyy site_id      people_total  area population_density
+#           <dbl> <chr>               <int> <dbl>              <int>
+# 1           111 新北市板橋區       549572 23.1               23753
+# 2           111 新北市三重區       379825 16.3               23278
+# 3           111 新北市中和區       403109 20.1               20011
+# 4           111 新北市永和區       212170  5.71              37133
+# 5           111 新北市新莊區       419966 19.7               21277
+
+```
+
+### (3) NA Processing：
+
+1.  執行完前述指令後，你發現console出現警告訊息Warning: NAs introduced
+    by coercion，（警告： 強制變更過程中產生了
+    缺失值），請「印出」是那些列的資料出現了`NA`。
+2.  請刪除帶有NA值的列後，將資料另存至新的變項`df_pop_cleaned`，並印出修改後的資料有幾列（`df_pop_cleaned`）？
+
+```{r}
+### your code
+na_rows <- df_pop %>%
+    filter(is.na(people_total) | is.na(area) | is.na(population_density))
+
+na_rows
+
+df_pop_cleaned <- df_pop %>%
+    drop_na(people_total, population_density)
+
+nrow(df_pop_cleaned)
+
+### Result should be
+
+# # A tibble: 2 × 5
+#   statistic_yyy site_id  people_total  area population_density
+#           <dbl> <chr>           <int> <dbl>              <int>
+# 1           111 東沙群島           NA 2.38                  NA
+# 2           111 南沙群島           NA 0.504                 NA
+
+# [1] 368
+```
+
+### (4) Sort data
+
+1.  依照人口密度由高至低排序，以`head()`印出六都中人口密度最高的前5個行政區。
+
+```{r}
+
+### Your code here
+df_pop_cleaned <- df_pop_cleaned %>%
+    mutate(county = str_sub(site_id, start = 1, end = 3))
+
+six_cities <- c("臺北市", "新北市", "桃園市", "臺中市", "臺南市", "高雄市")
+
+top_5_density <- df_pop_cleaned %>%
+    filter(county %in% six_cities) %>%
+    arrange(desc(population_density)) %>%
+    head(5)
+
+top_5_density
+
+### Result shoud be
+
+# # A tibble: 5 × 6
+#   statistic_yyy site_id        people_total  area population_density county
+#           <dbl> <chr>                 <int> <dbl>              <int> <chr> 
+# 1           111 高雄市桃源區           4258  929.                  5 高雄  
+# 2           111 高雄市茂林區           1940  194                  10 高雄  
+# 3           111 臺中市和平區          10919 1038.                 11 臺中  
+# 4           111 高雄市那瑪夏區         3201  253.                 13 高雄  
+# 5           111 新北市烏來區           6359  321.                 20 新北  
+#    
+
+# # A tibble: 5 × 6
+#   statistic_yyy site_id      people_total  area population_density county
+#           <dbl> <chr>               <int> <dbl>              <int> <chr> 
+# 1           111 新北市永和區       212170  5.71              37133 新北  
+# 2           111 新北市蘆洲區       199811  7.44              26874 新北  
+# 3           111 臺北市大安區       284557 11.4               25046 臺北  
+# 4           111 高雄市新興區        49068  1.98              24827 高雄  
+# 5           111 新北市板橋區       549572 23.1               23753 新北 
+```
+
+### (5) Population Increasing
+
+假設你想知道哪些鄉鎮正在衰落中，也想知道哪些行政區人口正在增加中。
+
+你認為應該以單一鄉鎮來看，還是以縣市為單位來看？如果是以鄉鎮（或縣市）的話，你會如何做計算來呈現這個結果？
+
+::: {#2-5-1}
+[我認為以單一鄉鎮為單位觀察會比縣市層級更精準，因為縣市平均可能掩蓋內部差異。]{.smallcaps}
+:::
+
+你的程式碼：
+
+```{r 2-5-2}
+# Code should be here
+df_114 <- df_pop_cleaned %>%
+    mutate(
+        county = str_sub(county, 1, 2),
+        town = str_sub(site_id, 4, 5)
+  )
+
+df_102 <- read_csv("data/AS03_102各鄉鎮市區人口密度.csv") %>%
+    slice(-1) %>%
+    mutate(
+        site_id = str_trim(site_id),
+        county = str_sub(site_id, 1, 2),
+        town = str_sub(site_id, 4, 5),
+        people_total = as.integer(people_total),
+        area = as.numeric(area),
+        population_density = as.numeric(population_density)
+    ) %>%
+    drop_na()
+
+df_compare <- df_102 %>%
+    select(county, town, people_102 = people_total) %>%
+    left_join(
+        df_114 %>% select(county, town, people_114 = people_total),
+        by = c("county", "town")) %>%
+    mutate(
+        change_rate = (people_114 - people_102) / people_102 * 100) %>%
+    filter(!is.na(change_rate)) %>%
+    arrange(desc(change_rate))
+
+# 人口成長最多前 10 名
+head(df_compare, 5)
+
+# 人口衰退最多前 10 名
+tail(df_compare, 5)
+
+```
+
+說明你發現的結果：
+
+::: {#2-5-3}
+我目前只以 102 年與 114
+年兩個年度的各鄉鎮人口數進行比較，計算各鄉鎮的人口變化率，藉此判斷哪些地區正在成長、哪些正在衰落。結果顯示，人口成長最快的鄉鎮多數集中在都會區周邊的衛星城市，如新北林口（+47%）、新竹竹北（+39%）與桃園龜山（+34%），反映台灣人口持續向大都會圈集中的趨勢。相對地，衰退最嚴重的鄉鎮多為偏遠農漁村或山區，如彰化大城（-22%）、臺南龍崎（-25%）與新北平溪（-22.0%），顯示城鄉人口失衡問題日趨嚴重。
+
+不過此分析有其侷限。目前僅比較兩個端點年度，無法得知中間 12
+年的變化過程。也許某些鄉鎮的人口變化可能並非線性，而是受特定政策或重大建設影響才在某個時間點急速改變，單憑頭尾兩筆資料無從判斷背後的驅動因素。
+:::

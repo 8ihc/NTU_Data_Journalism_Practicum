@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>誰在替夢想打白工？— 104 暑期實習職缺薪資分析</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+      font-weight: 400;
+      color: #111111;
+      background: #FFFFFF;
+      line-height: 1.85;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+      padding: 64px 0 36px;
+      border-bottom: 3px solid #1A1A1A;
+    }
+    .hero .kicker {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: #9B051E;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: #1A1A1A;
+      margin-bottom: 20px;
+    }
+    .hero .subtitle {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: #4A4A4A;
+      line-height: 1.65;
+      margin-bottom: 28px;
+      border-left: 4px solid #9B051E;
+      padding-left: 16px;
+    }
+    .hero .meta {
+      font-size: 12.5px;
+      color: #8A8A8A;
+      border-top: 1px solid #CCCCCC;
+      padding-top: 16px;
+      line-height: 1.8;
+    }
+
+    /* ── Stats bar ────────────────────────────────── */
+    .stats-bar {
+      display: flex;
+      gap: 0;
+      padding: 0;
+      border-bottom: 1px solid #CCCCCC;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      flex: 1;
+      min-width: 140px;
+      padding: 28px 20px;
+      border-right: 1px solid #EEEEEE;
+      text-align: center;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item .number {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1A4F8A;
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-item .number.red { color: #9B051E; }
+    .stat-item .label {
+      font-size: 12px;
+      color: #8A8A8A;
+      line-height: 1.5;
+    }
+
+    /* ── Section headings ─────────────────────────── */
+    section { margin-bottom: 8px; }
+    h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin: 52px 0 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #1A1A1A;
+    }
+    h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin: 32px 0 12px;
+    }
+
+    /* ── Body text ────────────────────────────────── */
+    p {
+      margin-bottom: 20px;
+      font-size: 15px;
+      line-height: 1.95;
+      color: #111111;
+    }
+    .highlight-red  { color: #9B051E; font-weight: 500; }
+    .highlight-blue { color: #1A4F8A; font-weight: 500; }
+
+    code {
+      background: #F0F0F0;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 13px;
+      font-family: 'Courier New', monospace;
+    }
+    em { font-style: italic; }
+
+    ul {
+      padding-left: 22px;
+      margin-bottom: 20px;
+    }
+    ul li {
+      font-size: 14px;
+      line-height: 2.1;
+      color: #111111;
+    }
+
+    /* ── Data note / blockquote ───────────────────── */
+    .data-note {
+      background: #F5F8FF;
+      border-left: 4px solid #1A4F8A;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 14px;
+      line-height: 1.85;
+      color: #1A1A1A;
+      border-radius: 0 4px 4px 0;
+    }
+    .data-note.red-border {
+      background: #FFF5F5;
+      border-left-color: #9B051E;
+    }
+
+    /* ── Tables ───────────────────────────────────── */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0 6px;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      background: #1A1A1A;
+      color: #FFFFFF;
+      padding: 10px 13px;
+      text-align: left;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    td {
+      padding: 9px 13px;
+      border-bottom: 1px solid #EEEEEE;
+      color: #111111;
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #FAFAFA; }
+    tr.tv-row td {
+      background: #FFF0F0 !important;
+      color: #9B051E;
+      font-weight: 500;
+    }
+    .star-tag {
+      background: #FFF3CD;
+      color: #7A5800;
+      padding: 1px 7px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .color-dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── Chart section ────────────────────────────── */
+    .chart-section {
+      margin: 44px 0 52px;
+    }
+    .chart-label {
+      font-size: 11px;
+      color: #9B051E;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .chart-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 6px;
+    }
+    .chart-caption {
+      font-size: 12.5px;
+      color: #7A7A7A;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .chart-wrapper {
+      width: 100%;
+      border: 1px solid #E0E0E0;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #FAFAFA;
+    }
+    .chart-wrapper iframe {
+      width: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── AI tool box ──────────────────────────────── */
+    .tool-box {
+      background: #F0F4FA;
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 16px 0 24px;
+    }
+    .tool-box h4 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1A4F8A;
+      margin-bottom: 10px;
+    }
+    .tool-box p {
+      font-size: 13.5px;
+      color: #4A4A4A;
+      margin-bottom: 0;
+      line-height: 1.85;
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    .footer {
+      margin-top: 72px;
+      padding: 32px 0 48px;
+      border-top: 1px solid #CCCCCC;
+      font-size: 12px;
+      color: #8A8A8A;
+      line-height: 2;
+    }
+
+    /* ── Footnote ─────────────────────────────────── */
+    .footnote {
+      font-size: 12px;
+      color: #8A8A8A;
+      margin-top: 6px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 16px; }
+      .hero h1   { font-size: 1.8rem; }
+      .stat-item { min-width: 120px; padding: 20px 12px; }
+      .stat-item .number { font-size: 1.8rem; }
+    }
+  </style>
+  <script src="https://cdn.plot.ly/plotly-3.5.0.min.js" charset="utf-8" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+
+  <!-- ① HERO ─────────────────────────────────────── -->
+  <header class="hero">
+    <div class="kicker">新聞資料分析 × 104 人力銀行</div>
+    <h1>誰在替夢想打白工？</h1>
+    <p class="subtitle">
+      104 人力銀行 434 筆暑期實習職缺揭露：電視業全數不支薪，最高月薪達 16 萬元
+    </p>
+    <div class="meta">
+      資料爬取日期：2026 年 5 月 24 日 &nbsp;｜&nbsp; 職缺刊登期間：2026 年 2 月 10 日 ～ 5 月 24 日（約 3.5 個月）<br>
+      資料來源：104 人力銀行公開 API &nbsp;｜&nbsp; 分析工具：Claude Sonnet 4.6（Anthropic）、Python、jieba、scikit-learn、Plotly
+    </div>
+  </header>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="number">434</span>
+      <div class="label">最終分析<br>職缺筆數</div>
+    </div>
+    <div class="stat-item">
+      <span class="number red">100%</span>
+      <div class="label">電視業職缺<br>全數不支薪</div>
+    </div>
+    <div class="stat-item">
+      <span class="number">16萬</span>
+      <div class="label">本資料<br>最高月薪</div>
+    </div>
+    <div class="stat-item">
+      <span class="number">66</span>
+      <div class="label">涵蓋產業<br>種類</div>
+    </div>
+  </div>
+
+
+  <!-- ② 引言 ──────────────────────────────────────── -->
+  <section>
+    <h2>關鍵發現</h2>
+    <p>
+      在 2026 年 5 月 104 人力銀行上搜尋「暑期實習」，電視業納入分析的 23 筆職缺，<span class="highlight-red">全數不支薪</span>——
+      薪資欄位明確標示「論件計酬、薪資為零」，意即這些實習生的勞動，不換來任何金錢報酬。
+      23 筆分別來自<span class="highlight-red">TVBS 聯利媒體股份有限公司</span>（12 筆）與<span class="highlight-red">八大電視股份有限公司</span>（11 筆）。
+    </p>
+    <p>
+      另一端，本資料中月薪最高的職缺來自<span class="highlight-blue">證券及期貨業</span>：
+      「AI 量化實習生」，月薪 <span class="highlight-blue">160,000 元</span>。
+      職缺數最多的半導體製造業共 75 筆，其中逾七成月薪超過三萬元。
+    </p>
+    <p>
+      為呈現台灣暑期實習市場的薪資樣貌，本文透過爬取 104 人力銀行公開 API，
+      彙整 434 筆職缺名稱含「暑期」的實習機會，分析各產業的薪資揭露方式與職缺描述特徵。
+    </p>
+  </section>
+
+
+  <!-- ③ 資料來源 & 爬蟲設計 ────────────────────────── -->
+  <section>
+    <h2>資料來源與爬蟲設計</h2>
+    <p>
+      本次資料於 <strong>2026 年 5 月 24 日</strong>爬取自 104 人力銀行，以「暑期實習」為搜尋關鍵字，
+      透過平台公開 API 分兩階段取得職缺資料：
+    </p>
+    <p>
+      <strong>第一階段（搜尋列表）：</strong>呼叫搜尋 API，取得符合條件的職缺清單，
+      包含職缺編號、名稱、薪資摘要、產業別等基本資訊。<br>
+      <strong>第二階段（職缺詳情）：</strong>以職缺 slug 逐筆呼叫 job detail API，
+      取得完整工作描述、條件要求等欄位。
+    </p>
+    <p>下表列出所有爬取的欄位，標示 ★ 者為本次分析主要使用的欄位：</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr><th>欄位名稱</th><th>說明</th><th>用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>job_name</td><td>職缺名稱</td><td>過濾暑期職缺</td></tr>
+          <tr><td>company_name</td><td>公司名稱</td><td>描述性</td></tr>
+          <tr><td><strong>salary</strong></td><td>薪資文字描述</td><td><span class="star-tag">★ 薪資分組</span></td></tr>
+          <tr><td><strong>salary_min</strong></td><td>薪資下限（元）</td><td><span class="star-tag">★ 薪資分組</span></td></tr>
+          <tr><td><strong>salary_max</strong></td><td>薪資上限（元）</td><td><span class="star-tag">★ 薪資分組</span></td></tr>
+          <tr><td><strong>industry</strong></td><td>產業別</td><td><span class="star-tag">★ 產業分析</span></td></tr>
+          <tr><td><strong>job_description</strong></td><td>工作描述（全文）</td><td><span class="star-tag">★ 關鍵詞分析</span></td></tr>
+          <tr><td><strong>other_condition</strong></td><td>其他條件說明</td><td><span class="star-tag">★ 關鍵詞分析</span></td></tr>
+          <tr><td>location</td><td>工作地點</td><td>描述性</td></tr>
+          <tr><td>education</td><td>學歷要求</td><td>描述性</td></tr>
+          <tr><td>major</td><td>科系要求</td><td>描述性</td></tr>
+          <tr><td>language</td><td>語言能力要求</td><td>描述性</td></tr>
+          <tr><td>skill</td><td>技能要求</td><td>描述性</td></tr>
+          <tr><td>experience</td><td>工作年資要求</td><td>描述性</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ④ 遇到的困難 ──────────────────────────────── -->
+  <section>
+    <h2>遇到的困難</h2>
+
+    <h3>困難一：爬蟲中途電腦當機</h3>
+    <p>
+      第二階段逐筆抓取 detail API 期間，電腦意外當機導致程式中斷。
+      所幸程式設計了 Checkpoint 機制——每成功取得一筆 detail 後即即時將進度寫入暫存檔，
+      重啟後能從中斷點繼續，避免大量重工。
+    </p>
+
+    <h3>困難二：搜尋結果混入大量非暑期職缺</h3>
+    <p>
+      104 搜尋 API 的 <code>kwop=7</code> 參數並非嚴格限定職缺「名稱」比對，
+      只要工作<em>描述</em>中含有「暑期」字樣的職缺同樣會出現在結果中。
+      原始爬取共取得 <strong>2,090</strong> 筆，其中包含救生員、學年度正職工讀等大量非暑期實習職缺。
+    </p>
+    <div class="data-note red-border">
+      <strong>處理方式：</strong>過濾保留職缺名稱（job_name）含「暑期」字樣的職缺，共 <strong>465</strong> 筆；
+      再排除薪資格式不適用者（如論件計酬同時填有金額的職缺），最終納入分析 <strong>434</strong> 筆。
+      論件計酬且標有金額的職缺，其薪資以「完成件數」計算，實際收入取決於產出數量而非工時，
+      難以換算為等值的時薪或月薪，無法與其他薪資制度進行橫向比較，故予以排除。
+    </div>
+  </section>
+
+
+  <!-- ⑤ 資料量說明 ──────────────────────────────── -->
+  <section>
+    <h2>資料量與定義說明</h2>
+
+    <div class="data-note">
+      原始爬取 <strong>2,090 筆</strong>
+      &nbsp;→&nbsp; 篩選職缺名稱含「暑期」：<strong>465 筆</strong>
+      &nbsp;→&nbsp; 排除薪資格式不符：<strong>434 筆</strong>（最終分析用）
+      &nbsp;｜&nbsp; 涵蓋 <strong>66 種</strong>產業
+    </div>
+
+    <h3>薪資組別定義</h3>
+    <p>本文依 104 職缺的薪資欄位，將職缺分為以下 6 個薪資組別：</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>薪資組別</th>
+            <th>定義</th>
+            <th>篩選邏輯</th>
+            <th style="text-align:right">筆數</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="color-dot" style="background:#F2C94C"></span>待遇面議</td>
+            <td>薪資未揭露</td>
+            <td>salary 欄位含「面議」</td>
+            <td style="text-align:right">8</td>
+          </tr>
+          <tr>
+            <td><span class="color-dot" style="background:#9B051E"></span>不支薪</td>
+            <td>明確無薪</td>
+            <td>論件計酬且 salary_min = salary_max = 0</td>
+            <td style="text-align:right">24</td>
+          </tr>
+          <tr>
+            <td><span class="color-dot" style="background:#F76977"></span>基本時薪</td>
+            <td>時薪等於法定最低工資</td>
+            <td>時薪制，salary_max = 196 元</td>
+            <td style="text-align:right">6</td>
+          </tr>
+          <tr>
+            <td><span class="color-dot" style="background:#F4C6C6"></span>高於基本時薪</td>
+            <td>時薪高於法定最低</td>
+            <td>時薪制，salary_max &gt; 196 元</td>
+            <td style="text-align:right">101</td>
+          </tr>
+          <tr>
+            <td><span class="color-dot" style="background:#92BDE4"></span>月薪 &le; 3萬</td>
+            <td>月薪較低端</td>
+            <td>月薪制，salary_min &le; 30,000 元 ※</td>
+            <td style="text-align:right">108</td>
+          </tr>
+          <tr>
+            <td><span class="color-dot" style="background:#1A4F8A"></span>月薪 &gt; 3萬</td>
+            <td>月薪較高端</td>
+            <td>月薪制，salary_min &gt; 30,000 元 ※</td>
+            <td style="text-align:right">187</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="footnote">
+      ※ 30,000 元接近本資料月薪下限的中位數（31,000 元），同時高於 2025 年法定基本月薪（27,470 元），作為本分析高低月薪的參考門檻。
+      104 平台對月薪職缺記錄「salary_min」（薪資下限）與「salary_max」（薪資上限），
+      本文以 salary_min 為分組依據。
+    </p>
+
+    <h3>前 15 大產業職缺數分布</h3>
+    <p>下表依總職缺數由多至少排序，列出前 15 個產業及其薪資組別分布：</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>產業</th>
+            <th style="text-align:right">合計</th>
+            <th style="text-align:right">待遇面議</th>
+            <th style="text-align:right">不支薪</th>
+            <th style="text-align:right">基本時薪</th>
+            <th style="text-align:right">高於基本時薪</th>
+            <th style="text-align:right">月薪&le;3萬</th>
+            <th style="text-align:right">月薪&gt;3萬</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>半導體製造業</td><td style="text-align:right">75</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">43</td><td style="text-align:right">31</td></tr>
+          <tr><td>其他相關製造業</td><td style="text-align:right">32</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">26</td><td style="text-align:right">6</td><td style="text-align:right">0</td></tr>
+          <tr><td>電腦及其週邊設備製造業</td><td style="text-align:right">31</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">29</td></tr>
+          <tr><td>人身保險業</td><td style="text-align:right">24</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">1</td><td style="text-align:right">3</td><td style="text-align:right">20</td></tr>
+          <tr class="tv-row"><td>電視業 ★</td><td style="text-align:right">23</td><td style="text-align:right">0</td><td style="text-align:right"><strong>23</strong></td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td></tr>
+          <tr><td>餐館業</td><td style="text-align:right">23</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">21</td><td style="text-align:right">0</td><td style="text-align:right">2</td></tr>
+          <tr><td>通訊機械器材相關業</td><td style="text-align:right">22</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">4</td><td style="text-align:right">18</td></tr>
+          <tr><td>IC 設計相關業</td><td style="text-align:right">16</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">5</td><td style="text-align:right">10</td></tr>
+          <tr><td>光電產業</td><td style="text-align:right">16</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">5</td><td style="text-align:right">11</td></tr>
+          <tr><td>證券及期貨業</td><td style="text-align:right">12</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">12</td></tr>
+          <tr><td>其他專業／科學及技術業</td><td style="text-align:right">12</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">11</td></tr>
+          <tr><td>電腦軟體服務業</td><td style="text-align:right">11</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">10</td><td style="text-align:right">0</td><td style="text-align:right">1</td></tr>
+          <tr><td>光學器材製造業</td><td style="text-align:right">9</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">9</td></tr>
+          <tr><td>化學原料製造業</td><td style="text-align:right">8</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">3</td><td style="text-align:right">5</td></tr>
+          <tr><td>人力仲介代徵</td><td style="text-align:right">8</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">2</td><td style="text-align:right">6</td><td style="text-align:right">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="footnote">★ 電視業 23 筆全數為不支薪（TVBS 聯利媒體 12 筆、八大電視 11 筆），為本資料中唯一此狀況之產業。另有利達數位影音科技股份有限公司的 2 筆電視業職缺（論件計酬 1,000～4,000 元）因薪資格式不符分析規則而被排除，未計入 23 筆內。</p>
+  </section>
+
+
+  <!-- ⑥ 使用的 AI 工具 ──────────────────────────── -->
+  <section>
+    <h2>使用的 AI 工具</h2>
+
+    <div class="tool-box">
+      <h4>Claude Sonnet 4.6（Anthropic）</h4>
+      <p>
+        本次分析全程借助 Claude Sonnet 4.6 作為協作工具：爬蟲腳本規劃與撰寫、
+        資料清理與薪資分組邏輯設計、Plotly 視覺化腳本撰寫，以及本報告的文字整理。
+        104 API 端點由洪嘉琪開啟瀏覽器 DevTools Network 面板確認後提供。
+        每次操作的 Prompt 與執行結果均自動記錄於 <code>LOG.md</code>。
+      </p>
+    </div>
+
+    <h3>文字分析輔助套件（非 AI）</h3>
+    <ul>
+      <li><strong>jieba</strong>：中文斷詞套件，用於將職缺描述切分為詞彙單元</li>
+      <li><strong>scikit-learn TfidfVectorizer</strong>：計算各薪資組別職缺描述的 TF-IDF 詞彙重要性分數</li>
+      <li><strong>Plotly</strong>：互動式視覺化圖表生成（輸出為 HTML，支援 hover 互動）</li>
+    </ul>
+  </section>
+
+
+  <!-- ⑦ 視覺化圖表 ──────────────────────────────── -->
+  <section>
+    <h2>視覺化圖表分析</h2>
+
+    <!-- Chart 01 -->
+    <div class="chart-section">
+      <div class="chart-label">圖一</div>
+      <div class="chart-title">全產業職缺數量與主要薪資型態</div>
+      <div class="chart-caption">
+        矩形面積代表該產業的職缺數量；顏色代表該產業最主要的薪資組別。
+        將滑鼠懸停於各矩形，可查看該產業完整的薪資組別分布。
+      </div>
+      <div class="chart-wrapper">
+        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+                        <div id="09e2b767-0700-4484-bd15-105219eb1307" class="plotly-graph-div" style="height:660px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("09e2b767-0700-4484-bd15-105219eb1307")) {                    Plotly.newPlot(                        "09e2b767-0700-4484-bd15-105219eb1307",                        [{"marker":{"color":"#F2C94C","size":12,"symbol":"square"},"mode":"markers","name":"\u5f85\u9047\u9762\u8b70","x":[null],"y":[null],"type":"scatter"},{"marker":{"color":"#9B051E","size":12,"symbol":"square"},"mode":"markers","name":"\u4e0d\u652f\u85aa","x":[null],"y":[null],"type":"scatter"},{"marker":{"color":"#F76977","size":12,"symbol":"square"},"mode":"markers","name":"\u57fa\u672c\u6642\u85aa","x":[null],"y":[null],"type":"scatter"},{"marker":{"color":"#F4C6C6","size":12,"symbol":"square"},"mode":"markers","name":"\u9ad8\u65bc\u57fa\u672c\u6642\u85aa","x":[null],"y":[null],"type":"scatter"},{"marker":{"color":"#92BDE4","size":12,"symbol":"square"},"mode":"markers","name":"\u6708\u85aa \u003c= 3\u842c","x":[null],"y":[null],"type":"scatter"},{"marker":{"color":"#1A4F8A","size":12,"symbol":"square"},"mode":"markers","name":"\u6708\u85aa \u003e 3\u842c","x":[null],"y":[null],"type":"scatter"},{"customdata":["\u003cb\u003e\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a75 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a43 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a31 \u7b46","\u003cb\u003e\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a32 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a26 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a6 \u7b46","\u003cb\u003e\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a31 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a29 \u7b46","\u003cb\u003e\u4eba\u8eab\u4fdd\u96aa\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a24 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a3 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a20 \u7b46","\u003cb\u003e\u96fb\u8996\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a23 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u4e0d\u652f\u85aa\uff1a23 \u7b46","\u003cb\u003e\u9910\u9928\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a23 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a21 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a22 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a4 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a18 \u7b46","\u003cb\u003eIC\u8a2d\u8a08\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a16 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a5 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a10 \u7b46","\u003cb\u003e\u5149\u96fb\u7522\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a16 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a5 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a11 \u7b46","\u003cb\u003e\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a12 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a11 \u7b46","\u003cb\u003e\u8b49\u5238\u53ca\u671f\u8ca8\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a12 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a12 \u7b46","\u003cb\u003e\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a11 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a10 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a9 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a9 \u7b46","\u003cb\u003e\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a8 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a7 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u4eba\u529b\u4ef2\u4ecb\u4ee3\u5fb5\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a8 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a6 \u7b46","\u003cb\u003e\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a8 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a3 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a5 \u7b46","\u003cb\u003e\u7522\u7269\u4fdd\u96aa\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a6 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a6 \u7b46","\u003cb\u003e\u73bb\u7483\u53ca\u73bb\u7483\u88fd\u54c1\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a6 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a6 \u7b46","\u003cb\u003e\u65c5\u904a\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a5 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a3 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u751f\u5316\u79d1\u6280\u7814\u767c\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a4 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u6c7d\u8eca\u53ca\u5176\u96f6\u4ef6\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a4 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a4 \u7b46","\u003cb\u003e\u81ea\u52d5\u63a7\u5236\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a4 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a4 \u7b46","\u003cb\u003e\u8cc7\u6599\u5132\u5b58\u5a92\u9ad4\u88fd\u9020\u53ca\u8907\u88fd\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a4 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a4 \u7b46","\u003cb\u003e\u5176\u4ed6\u96fb\u5b50\u96f6\u7d44\u4ef6\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a3 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u9280\u884c\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a3 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u793e\u6703\u798f\u5229\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a3 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a3 \u7b46","\u003cb\u003e\u5efa\u7bc9\u5de5\u7a0b\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a3 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a2 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u91d1\u878d\u63a7\u80a1\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a3 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a3 \u7b46","\u003cb\u003e\u5370\u5237\u96fb\u8def\u677f\u88fd\u9020\u696d(PCB)\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a3 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a3 \u7b46","\u003cb\u003e\u5efa\u7269\u88dd\u4fee\u53ca\u88dd\u6f62\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u4e0d\u652f\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u534a\u5c0e\u9ad4\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u96f6\u552e\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46","\u003cb\u003e\u7d21\u7e54\u6210\u8863\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46","\u003cb\u003e\u5176\u4ed6\u98df\u54c1\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46","\u003cb\u003e\u7db2\u969b\u7db2\u8def\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u85e5\u54c1\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u85e5\u54c1\uff0f\u5316\u599d\u54c1\u53ca\u6e05\u6f54\u7528\u54c1\u96f6\u552e\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u88dc\u7fd2\u73ed\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46","\u003cb\u003e\u7d9c\u5408\u5546\u54c1\u6279\u767c\u4ee3\u7406\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46","\u003cb\u003e\u5efa\u6750\uff0f\u50a2\u4ff1\u96f6\u552e\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a2 \u7b46","\u003cb\u003e\u91d1\u5c6c\u52a0\u5de5\u7528\u6a5f\u68b0\u88fd\u9020\u4fee\u914d\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u591a\u5a92\u9ad4\u50b3\u64ad\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u8239\u8236\u53ca\u5176\u96f6\u4ef6\u88fd\u9020\u4fee\u914d\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u96fb\u4fe1\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u5bb6\u5ead\u96fb\u5668\uff0f\u8a2d\u5099\u53ca\u7528\u54c1\u6279\u767c\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a2 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a2 \u7b46","\u003cb\u003e\u85dd\u6587\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u5f85\u9047\u9762\u8b70\uff1a1 \u7b46","\u003cb\u003e\u5bf5\u7269\u76f8\u95dc\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5ee3\u544a\u884c\u92b7\u516c\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u904b\u52d5\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u6559\u80b2\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u96fb\u5f71\u7247\u88fd\u4f5c\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5de5\u5546\u9867\u554f\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5efa\u7bc9\u53ca\u5de5\u7a0b\u6280\u8853\u670d\u52d9\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u98f2\u6599\u5e97\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u6295\u8cc7\u7406\u8ca1\u76f8\u95dc\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u91d1\u5c6c\u76f8\u95dc\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\uff1a1 \u7b46","\u003cb\u003e\u96fb\u529b\u6a5f\u68b0\u5668\u6750\u88fd\u9020\u4fee\u914d\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u6c7d\u6a5f\u8eca\u53ca\u5176\u96f6\u914d\u4ef6\uff0f\u7528\u54c1\u96f6\u552e\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u975e\u91d1\u5c6c\u7926\u7269\u88fd\u54c1\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u81ea\u884c\u8eca\u53ca\u5176\u96f6\u4ef6\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u7f8e\u9aee\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u65c5\u9928\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003c= 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u4e73\u54c1\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u6aa2\u6e2c\u6280\u8853\u670d\u52d9\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u91ab\u7642\u5668\u6750\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46","\u003cb\u003e\u5176\u4ed6\u96fb\u529b\u5668\u6750\u88fd\u9020\u696d\u003c\u002fb\u003e\u003cbr\u003e\u5408\u8a08\uff1a1 \u7b46\u003cbr\u003e\u2500\u2500\u2500\u2500\u2500\u003cbr\u003e\u6708\u85aa \u003e 3\u842c\uff1a1 \u7b46"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","labels":["\u534a\u5c0e\u9ad4\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8996\u696d","\u9910\u9928\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u5149\u96fb\u7522\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u4eba\u529b\u4ef2\u4ecb\u4ee3\u5fb5","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u7522\u7269\u4fdd\u96aa\u696d","\u73bb\u7483\u53ca\u73bb\u7483\u88fd\u54c1\u88fd\u9020\u696d","\u65c5\u904a\u670d\u52d9\u696d","\u751f\u5316\u79d1\u6280\u7814\u767c\u696d","\u6c7d\u8eca\u53ca\u5176\u96f6\u4ef6\u88fd\u9020\u696d","\u81ea\u52d5\u63a7\u5236\u76f8\u95dc\u696d","\u8cc7\u6599\u5132\u5b58\u5a92\u9ad4\u88fd\u9020\u53ca\u8907\u88fd\u696d","\u5176\u4ed6\u96fb\u5b50\u96f6\u7d44\u4ef6\u76f8\u95dc\u696d","\u9280\u884c\u696d","\u793e\u6703\u798f\u5229\u670d\u52d9\u696d","\u5efa\u7bc9\u5de5\u7a0b\u696d","\u91d1\u878d\u63a7\u80a1\u696d","\u5370\u5237\u96fb\u8def\u677f\u88fd\u9020\u696d(PCB)","\u5efa\u7269\u88dd\u4fee\u53ca\u88dd\u6f62\u696d","\u5176\u4ed6\u534a\u5c0e\u9ad4\u76f8\u95dc\u696d","\u5176\u4ed6\u96f6\u552e\u696d","\u7d21\u7e54\u6210\u8863\u696d","\u5176\u4ed6\u98df\u54c1\u88fd\u9020\u696d","\u7db2\u969b\u7db2\u8def\u76f8\u95dc\u696d","\u85e5\u54c1\u88fd\u9020\u696d","\u85e5\u54c1\uff0f\u5316\u599d\u54c1\u53ca\u6e05\u6f54\u7528\u54c1\u96f6\u552e\u696d","\u88dc\u7fd2\u73ed","\u7d9c\u5408\u5546\u54c1\u6279\u767c\u4ee3\u7406\u696d","\u5efa\u6750\uff0f\u50a2\u4ff1\u96f6\u552e\u696d","\u91d1\u5c6c\u52a0\u5de5\u7528\u6a5f\u68b0\u88fd\u9020\u4fee\u914d\u696d","\u591a\u5a92\u9ad4\u50b3\u64ad\u76f8\u95dc\u696d","\u8239\u8236\u53ca\u5176\u96f6\u4ef6\u88fd\u9020\u4fee\u914d\u696d","\u96fb\u4fe1\u76f8\u95dc\u696d","\u5bb6\u5ead\u96fb\u5668\uff0f\u8a2d\u5099\u53ca\u7528\u54c1\u6279\u767c\u696d","\u85dd\u6587\u670d\u52d9\u696d","\u5bf5\u7269\u76f8\u95dc\u670d\u52d9\u696d","\u5ee3\u544a\u884c\u92b7\u516c\u95dc\u696d","\u904b\u52d5\u670d\u52d9\u696d","\u5176\u4ed6\u6559\u80b2\u670d\u52d9\u696d","\u96fb\u5f71\u7247\u88fd\u4f5c\u696d","\u5de5\u5546\u9867\u554f\u670d\u52d9\u696d","\u5efa\u7bc9\u53ca\u5de5\u7a0b\u6280\u8853\u670d\u52d9\u696d","\u98f2\u6599\u5e97\u696d","\u5176\u4ed6\u6295\u8cc7\u7406\u8ca1\u76f8\u95dc\u696d","\u5176\u4ed6\u91d1\u5c6c\u76f8\u95dc\u88fd\u9020\u696d","\u96fb\u529b\u6a5f\u68b0\u5668\u6750\u88fd\u9020\u4fee\u914d\u696d","\u6c7d\u6a5f\u8eca\u53ca\u5176\u96f6\u914d\u4ef6\uff0f\u7528\u54c1\u96f6\u552e\u696d","\u5176\u4ed6\u975e\u91d1\u5c6c\u7926\u7269\u88fd\u54c1\u88fd\u9020\u696d","\u81ea\u884c\u8eca\u53ca\u5176\u96f6\u4ef6\u88fd\u9020\u696d","\u7f8e\u9aee\u696d","\u65c5\u9928\u696d","\u4e73\u54c1\u88fd\u9020\u696d","\u6aa2\u6e2c\u6280\u8853\u670d\u52d9","\u91ab\u7642\u5668\u6750\u88fd\u9020\u696d","\u5176\u4ed6\u96fb\u529b\u5668\u6750\u88fd\u9020\u696d"],"marker":{"colors":["#92BDE4","#F4C6C6","#1A4F8A","#1A4F8A","#9B051E","#F4C6C6","#1A4F8A","#1A4F8A","#1A4F8A","#1A4F8A","#1A4F8A","#F4C6C6","#1A4F8A","#F4C6C6","#92BDE4","#1A4F8A","#F4C6C6","#1A4F8A","#F4C6C6","#F4C6C6","#92BDE4","#92BDE4","#92BDE4","#1A4F8A","#1A4F8A","#92BDE4","#92BDE4","#1A4F8A","#1A4F8A","#F2C94C","#F2C94C","#F76977","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#92BDE4","#92BDE4","#1A4F8A","#1A4F8A","#F2C94C","#F76977","#F76977","#F76977","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#F4C6C6","#92BDE4","#92BDE4","#92BDE4","#92BDE4","#92BDE4","#92BDE4","#1A4F8A","#1A4F8A","#1A4F8A","#1A4F8A"],"line":{"color":"white","width":1.5}},"parents":["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],"textfont":{"family":"Noto Sans TC, Microsoft JhengHei","size":12},"textinfo":"label+value","values":[75,32,31,24,23,23,22,16,16,12,12,11,9,8,8,8,6,6,5,4,4,4,4,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"type":"treemap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"font":{"family":"Noto Sans TC, Microsoft JhengHei, sans-serif","color":"#1A1A1A"},"hoverlabel":{"font":{"size":13,"family":"Noto Sans TC, Microsoft JhengHei"},"bgcolor":"white"},"margin":{"l":20,"r":20,"t":20,"b":20},"legend":{"font":{"size":12},"title":{"text":"\u984f\u8272\uff1d\u4e3b\u8981\u85aa\u8cc7\u578b\u614b  "},"orientation":"h","yanchor":"top","y":-0.01,"xanchor":"left","x":0},"plot_bgcolor":"white","paper_bgcolor":"white","height":660},                        {"responsive": true}                    )                };            </script>
+      </div>
+      <p style="margin-top:20px;">
+        從全產業樣貌來看，深藍色（月薪 &gt; 3萬）在各產業主色中佔比最高，共涵蓋 21 個產業、178 筆職缺，
+        可以初步觀察到台灣暑期實習市場由科技與製造業以及金融業共同主導的格局。
+        不過，職缺數最多的半導體製造業（75 筆）以淺藍色（月薪 &le; 3萬）呈現，
+        因其 43 筆月薪不超過三萬元，略多於 31 筆月薪超過三萬元。
+        電腦及其週邊設備製造業（31 筆）、人身保險業（24 筆）、通訊機械器材相關業（22 筆）、
+        IC 設計相關業（16 筆）、證券及期貨業（12 筆）等，職缺則以月薪 &gt; 3 萬為主。
+      </p>
+      <p>
+        圖中的<span class="highlight-red">酒紅色小塊</span>為電視業。
+        它在版面上的面積並不顯眼，卻是這份資料中唯一所有職缺全數為「不支薪」的產業——
+        23 筆職缺，23 筆不支薪，無一例外。這 23 筆來自兩家電視台：
+        <span class="highlight-red">TVBS 聯利媒體股份有限公司</span>（12 筆）與
+        <span class="highlight-red">八大電視股份有限公司</span>（11 筆）。
+      </p>
+    </div>
+
+    <!-- Chart 02 -->
+    <div class="chart-section">
+      <div class="chart-label">圖二</div>
+      <div class="chart-title">前 15 大產業薪資組別比例</div>
+      <div class="chart-caption">
+        各長條標準化為 100%，呈現各產業內部的薪資型態組成。括號內為該產業總職缺數。
+        排序依職缺數由少至多（最下方職缺數最多）。
+      </div>
+      <div class="chart-wrapper">
+        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+                        <div id="a3eadd45-6ab1-4a97-84f1-513396f94252" class="plotly-graph-div" style="height:580px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("a3eadd45-6ab1-4a97-84f1-513396f94252")) {                    Plotly.newPlot(                        "a3eadd45-6ab1-4a97-84f1-513396f94252",                        [{"customdata":["\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\uff08\u5171 9 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\uff08\u5171 11 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff088.3%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u8b49\u5238\u53ca\u671f\u8ca8\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u5149\u96fb\u7522\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003eIC\u8a2d\u8a08\u76f8\u95dc\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff086.2%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\uff08\u5171 22 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u9910\u9928\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8996\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u4eba\u8eab\u4fdd\u96aa\u696d\uff08\u5171 24 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\uff08\u5171 31 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff083.2%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\uff08\u5171 32 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u5f85\u9047\u9762\u8b70\u003c\u002fb\u003e\u003cbr\u003e\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\uff08\u5171 75 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff081.3%\uff09"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#F2C94C","line":{"color":"white","width":0.5}},"name":"\u5f85\u9047\u9762\u8b70","orientation":"h","x":[0.0,0.0,0.0,0.0,8.3,0.0,0.0,6.2,0.0,0.0,0.0,0.0,3.2,0.0,1.3],"y":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u5149\u96fb\u7522\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","\u9910\u9928\u696d","\u96fb\u8996\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d"],"type":"bar"},{"customdata":["\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\uff08\u5171 9 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\uff08\u5171 11 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u8b49\u5238\u53ca\u671f\u8ca8\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5149\u96fb\u7522\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003eIC\u8a2d\u8a08\u76f8\u95dc\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\uff08\u5171 22 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u9910\u9928\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8996\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a23 \u7b46\uff08100.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u4eba\u8eab\u4fdd\u96aa\u696d\uff08\u5171 24 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\uff08\u5171 31 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\uff08\u5171 32 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u4e0d\u652f\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\uff08\u5171 75 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#9B051E","line":{"color":"white","width":0.5}},"name":"\u4e0d\u652f\u85aa","orientation":"h","x":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,100.0,0.0,0.0,0.0,0.0],"y":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u5149\u96fb\u7522\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","\u9910\u9928\u696d","\u96fb\u8996\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d"],"type":"bar"},{"customdata":["\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a7 \u7b46\uff0887.5%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\uff08\u5171 9 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\uff08\u5171 11 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a10 \u7b46\uff0890.9%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u8b49\u5238\u53ca\u671f\u8ca8\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5149\u96fb\u7522\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003eIC\u8a2d\u8a08\u76f8\u95dc\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\uff08\u5171 22 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u9910\u9928\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a21 \u7b46\uff0891.3%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8996\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u4eba\u8eab\u4fdd\u96aa\u696d\uff08\u5171 24 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff084.2%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\uff08\u5171 31 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff083.2%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\uff08\u5171 32 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a26 \u7b46\uff0881.2%\uff09","\u003cb\u003e\u9ad8\u65bc\u57fa\u672c\u6642\u85aa\u003c\u002fb\u003e\u003cbr\u003e\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\uff08\u5171 75 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#F4C6C6","line":{"color":"white","width":0.5}},"name":"\u9ad8\u65bc\u57fa\u672c\u6642\u85aa","orientation":"h","x":[87.5,0.0,0.0,90.9,0.0,0.0,0.0,0.0,0.0,91.3,0.0,4.2,3.2,81.2,0.0],"y":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u5149\u96fb\u7522\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","\u9910\u9928\u696d","\u96fb\u8996\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d"],"type":"bar"},{"customdata":["\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff0812.5%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a3 \u7b46\uff0837.5%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\uff08\u5171 9 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\uff08\u5171 11 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u8b49\u5238\u53ca\u671f\u8ca8\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5149\u96fb\u7522\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a5 \u7b46\uff0831.2%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003eIC\u8a2d\u8a08\u76f8\u95dc\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a5 \u7b46\uff0831.2%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\uff08\u5171 22 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a4 \u7b46\uff0818.2%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u9910\u9928\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8996\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u4eba\u8eab\u4fdd\u96aa\u696d\uff08\u5171 24 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a3 \u7b46\uff0812.5%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\uff08\u5171 31 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\uff08\u5171 32 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a6 \u7b46\uff0818.8%\uff09","\u003cb\u003e\u6708\u85aa \u003c= 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\uff08\u5171 75 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a43 \u7b46\uff0857.3%\uff09"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#92BDE4","line":{"color":"white","width":0.5}},"name":"\u6708\u85aa \u003c= 3\u842c","orientation":"h","x":[12.5,37.5,0.0,0.0,0.0,0.0,31.2,31.2,18.2,0.0,0.0,12.5,0.0,18.8,57.3],"y":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u5149\u96fb\u7522\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","\u9910\u9928\u696d","\u96fb\u8996\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d"],"type":"bar"},{"customdata":["\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\uff08\u5171 8 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a5 \u7b46\uff0862.5%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\uff08\u5171 9 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a9 \u7b46\uff08100.0%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\uff08\u5171 11 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a1 \u7b46\uff089.1%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a11 \u7b46\uff0891.7%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u8b49\u5238\u53ca\u671f\u8ca8\u696d\uff08\u5171 12 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a12 \u7b46\uff08100.0%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5149\u96fb\u7522\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a11 \u7b46\uff0868.8%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003eIC\u8a2d\u8a08\u76f8\u95dc\u696d\uff08\u5171 16 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a10 \u7b46\uff0862.5%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\uff08\u5171 22 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a18 \u7b46\uff0881.8%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u9910\u9928\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a2 \u7b46\uff088.7%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8996\u696d\uff08\u5171 23 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u4eba\u8eab\u4fdd\u96aa\u696d\uff08\u5171 24 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a20 \u7b46\uff0883.3%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\uff08\u5171 31 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a29 \u7b46\uff0893.5%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\uff08\u5171 32 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a0 \u7b46\uff080.0%\uff09","\u003cb\u003e\u6708\u85aa \u003e 3\u842c\u003c\u002fb\u003e\u003cbr\u003e\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\uff08\u5171 75 \u7b46\uff09\u003cbr\u003e\u672c\u7d44\uff1a31 \u7b46\uff0841.3%\uff09"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A4F8A","line":{"color":"white","width":0.5}},"name":"\u6708\u85aa \u003e 3\u842c","orientation":"h","x":[0.0,62.5,100.0,9.1,91.7,100.0,68.8,62.5,81.8,8.7,0.0,83.3,93.5,0.0,41.3],"y":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u5149\u96fb\u7522\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","\u9910\u9928\u696d","\u96fb\u8996\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d"],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"font":{"family":"Noto Sans TC, Microsoft JhengHei, sans-serif","color":"#1A1A1A"},"hoverlabel":{"font":{"size":13,"family":"Noto Sans TC, Microsoft JhengHei"},"bgcolor":"white"},"margin":{"l":220,"r":40,"t":30,"b":60},"xaxis":{"title":{"text":"\u4f54\u6bd4\uff08%\uff09"},"range":[0,105],"showgrid":true,"gridcolor":"#CCCCCC","ticksuffix":"%"},"yaxis":{"tickfont":{"size":12},"title":{"text":""},"showgrid":false,"tickvals":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d","\u8b49\u5238\u53ca\u671f\u8ca8\u696d","\u5149\u96fb\u7522\u696d","IC\u8a2d\u8a08\u76f8\u95dc\u696d","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d","\u9910\u9928\u696d","\u96fb\u8996\u696d","\u4eba\u8eab\u4fdd\u96aa\u696d","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d"],"ticktext":["\u6587\u6559\uff0f\u80b2\u6a02\u7528\u54c1\u96f6\u552e\u696d\uff088\uff09","\u5316\u5b78\u539f\u6599\u88fd\u9020\u696d\uff088\uff09","\u5149\u5b78\u5668\u6750\u88fd\u9020\u696d\uff089\uff09","\u96fb\u8166\u8edf\u9ad4\u670d\u52d9\u696d\uff0811\uff09","\u5176\u4ed6\u5c08\u696d\uff0f\u79d1\u5b78\u53ca\u6280\u8853\u696d\uff0812\uff09","\u8b49\u5238\u53ca\u671f\u8ca8\u696d\uff0812\uff09","\u5149\u96fb\u7522\u696d\uff0816\uff09","IC\u8a2d\u8a08\u76f8\u95dc\u696d\uff0816\uff09","\u901a\u8a0a\u6a5f\u68b0\u5668\u6750\u76f8\u95dc\u696d\uff0822\uff09","\u9910\u9928\u696d\uff0823\uff09","\u96fb\u8996\u696d\uff0823\uff09","\u4eba\u8eab\u4fdd\u96aa\u696d\uff0824\uff09","\u96fb\u8166\u53ca\u5176\u9031\u908a\u8a2d\u5099\u88fd\u9020\u696d\uff0831\uff09","\u5176\u4ed6\u76f8\u95dc\u88fd\u9020\u696d\uff0832\uff09","\u534a\u5c0e\u9ad4\u88fd\u9020\u696d\uff0875\uff09"]},"legend":{"font":{"size":11},"orientation":"h","yanchor":"bottom","y":1.02,"xanchor":"right","x":1},"plot_bgcolor":"white","paper_bgcolor":"white","barmode":"stack","height":580},                        {"responsive": true}                    )                };            </script>
+      </div>
+      <p style="margin-top:20px;">
+        圖二更直接地呈現各產業的薪資結構差異。
+        <span class="highlight-red">電視業那一整條酒紅色</span>——100% 不支薪——
+        與<span class="highlight-blue">證券及期貨業、光學器材製造業</span>的整條深藍（月薪 &gt; 3萬，100%）
+        形成最強烈的視覺反差：一端是完全零薪，另一端是全數高薪。
+      </p>
+      <p>
+        餐館業的橫條幾乎全為粉紅色（高於基本時薪），反映餐飲業暑期工讀以時薪制為主；
+        電腦軟體服務業亦以時薪制主導。
+        此外，可以觀察到，前 15 大產業中，待遇面議（黃色）主要出現在科技相關產業，
+        如半導體製造業、電腦及其週邊設備製造業、IC 設計相關業等，其他產業幾乎未見。
+      </p>
+    </div>
+
+    <!-- Chart 03 -->
+    <div class="chart-section">
+      <div class="chart-label">圖三</div>
+      <div class="chart-title">各薪資組別職缺描述關鍵詞熱力圖（TF-IDF）</div>
+      <div class="chart-caption">
+        以 jieba 斷詞後對各薪資組別的合併職缺描述進行 TF-IDF 分析。
+        顏色越深代表該詞對該組越具有區別性；滑鼠懸停可查看確切數值。
+      </div>
+      <div class="chart-wrapper">
+        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+                        <div id="c736f47d-def8-4308-8b00-6cfaed8ef9b0" class="plotly-graph-div" style="height:956px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("c736f47d-def8-4308-8b00-6cfaed8ef9b0")) {                    Plotly.newPlot(                        "c736f47d-def8-4308-8b00-6cfaed8ef9b0",                        [{"colorbar":{"tickfont":{"size":11},"title":{"text":"TF-IDF"}},"colorscale":[[0.0,"#FFFFFF"],[0.3,"#D6E8F7"],[0.6,"#92BDE4"],[0.85,"#4D8FC4"],[1.0,"#1A4F8A"]],"hoverongaps":false,"hovertemplate":"\u003cb\u003e%{y}\u003c\u002fb\u003e\u003cbr\u003e%{x}\u003cbr\u003eTF-IDF\uff1a%{z:.4f}\u003cextra\u003e\u003c\u002fextra\u003e","x":["\u5f85\u9047\u9762\u8b70","\u4e0d\u652f\u85aa","\u57fa\u672c\u6642\u85aa","\u9ad8\u65bc\u57fa\u672c\u6642\u85aa","\u6708\u85aa \u003c= 3\u842c","\u6708\u85aa \u003e 3\u842c"],"xgap":2,"y":["\u4eff\u771f","\u958b\u767c","\u8a2d\u8a08","\u5de5\u85dd","\u96fb\u8def","\u5b78\u7fd2","\u6a21\u578b","\u865b\u64ec","\u5167\u5bb9","\u793e\u7fa4","\u526a\u8f2f","\u65b0\u805e","\u6232\u5287","\u6587\u66f8","\u9304\u5f71","\u5de5\u5177","\u54c1\u724c","\u80fd\u529b","\u9752\u5e74","\u884c\u92b7","\u8077\u5834","\u6d3b\u52d5","\u675c\u90a6","\u5236\u5ea6","\u5168\u7403","\u672a\u4f86","\u734e\u91d1","\u535a\u58eb","\u6392\u73ed","\u7d93\u9a57","\u79d1\u6280","\u8208\u8da3","\u5275\u9020\u529b","\u745e\u6631","\u5206\u6790","\u5c08\u6848","\u5927\u5b78","\u689d\u4ef6"],"ygap":1,"z":[[0.3466,0.0,0.0,0.0,0.0,0.0],[0.1776,0.0479,0.0,0.0618,0.1068,0.1273],[0.1758,0.0623,0.0276,0.0274,0.1396,0.0897],[0.1485,0.0,0.0,0.0,0.0,0.0],[0.1371,0.0,0.0,0.0,0.0525,0.0529],[0.1319,0.0623,0.1379,0.0745,0.1548,0.1418],[0.1268,0.0239,0.0,0.0106,0.0019,0.0252],[0.1218,0.0,0.0,0.0,0.0,0.0045],[0.044,0.2386,0.1241,0.1085,0.0959,0.1139],[0.0,0.2036,0.2387,0.009,0.0485,0.0196],[0.0,0.2036,0.0637,0.0045,0.0194,0.007],[0.0,0.1917,0.0255,0.0,0.0,0.0],[0.0,0.187,0.0,0.0,0.0,0.0],[0.0,0.1803,0.0,0.007,0.0157,0.0049],[0.0,0.1636,0.0,0.0,0.0,0.0],[0.1099,0.1556,0.0414,0.0209,0.0421,0.0618],[0.0,0.0359,0.191,0.0332,0.0291,0.0098],[0.0879,0.0623,0.1655,0.0523,0.0639,0.1576],[0.0,0.0,0.1528,0.0,0.0093,0.0],[0.022,0.0623,0.1517,0.0144,0.0185,0.0376],[0.0,0.0,0.129,0.0384,0.018,0.1053],[0.0,0.0838,0.1273,0.0558,0.1709,0.0853],[0.0,0.0,0.0,0.2708,0.0,0.0],[0.0,0.0,0.0,0.1243,0.0079,0.0113],[0.0,0.0,0.0,0.1223,0.0708,0.0038],[0.0,0.0,0.0921,0.1188,0.0315,0.0923],[0.0,0.0,0.0,0.1182,0.0052,0.0038],[0.1028,0.0,0.0,0.106,0.0,0.0132],[0.0,0.0,0.0184,0.103,0.0022,0.0016],[0.0,0.0599,0.0796,0.0739,0.1514,0.1259],[0.0,0.0277,0.0,0.0803,0.1484,0.128],[0.0,0.0239,0.0159,0.0211,0.1379,0.0364],[0.0,0.0,0.0,0.0,0.1289,0.0],[0.0,0.0,0.0,0.0,0.1289,0.0],[0.1099,0.0104,0.0276,0.0653,0.0959,0.1612],[0.022,0.0311,0.0689,0.0836,0.1043,0.1564],[0.0294,0.0,0.0,0.007,0.0719,0.1377],[0.022,0.0208,0.0276,0.0862,0.0522,0.1297]],"type":"heatmap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"font":{"family":"Noto Sans TC, Microsoft JhengHei, sans-serif","color":"#1A1A1A"},"hoverlabel":{"font":{"size":13,"family":"Noto Sans TC, Microsoft JhengHei"},"bgcolor":"white"},"margin":{"l":100,"r":60,"t":30,"b":60},"xaxis":{"tickfont":{"size":12},"side":"bottom"},"yaxis":{"tickfont":{"size":11},"autorange":"reversed"},"plot_bgcolor":"white","paper_bgcolor":"white","height":956},                        {"responsive": true}                    )                };            </script>
+      </div>
+      <p style="margin-top:20px;">
+        TF-IDF（詞頻—逆文件頻率）衡量的是一個詞彙在特定文件群組中的「獨特重要性」：
+        若某詞在某一薪資組別的職缺描述中大量出現，卻在其他組別中罕見，則該詞對這個組別的 TF-IDF 值越高。
+        本分析將每個薪資組別的所有職缺描述合併為一份文件，再進行跨組比較。
+      </p>
+      <p>
+        從熱力圖中可以觀察到，各薪資組別的職缺描述在詞彙上存在一定差異。
+        值得注意的是，「學習」、「內容」、「能力」等詞在多個組別中均有較深的顏色，
+        或許反映了雇主對實習生的某些共同期待，不因薪資高低而有太大差別。
+        不支薪組的特色詞彙則偏向媒體製作相關技能（如「社群」、「剪輯」、「新聞」、「戲劇」）；
+        月薪 &gt; 3萬組則較集中出現「分析」、「專案」、「開發」等工程研發導向詞彙，
+        且出現了「大四」一詞，或許反映科技業對高年級學生具備一定研究能力的期待。
+        這些詞彙差異或許反映了不同薪資條件下，雇主對暑期實習生的職能期待有所不同。
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ⑧ 結論 ──────────────────────────────────── -->
+  <section>
+    <h2>觀察與討論</h2>
+    <p>
+      根據這份 434 筆暑期實習職缺資料，可以初步觀察到幾個現象：
+    </p>
+    <p>
+      <strong>第一，電視業暑期實習或許存在不支薪的結構性傾向。</strong>
+      在本資料中，電視業 23 筆職缺全數標示不支薪，比例達 100%。
+      電視媒體產業對實習生的吸引力，是否讓求職者接受零薪酬的條件，值得進一步研究。
+      需注意，本資料僅為單日爬取結果，不代表整體市場長期樣貌。
+    </p>
+    <p>
+      <strong>第二，在本資料中，高薪實習高度集中在科技製造與金融領域。</strong>
+      月薪超過三萬元的職缺，主要來自半導體製造業、電腦及其週邊設備製造業、
+      IC 設計相關業、通訊機械器材相關業等科技業，以及人身保險業、證券及期貨業等金融業。
+      這些產業的高薪職缺，或許與業界對理工與金融人才的競爭性需求有一定關聯。
+    </p>
+    <p>
+      <strong>第三，職缺描述的文字差異，或許呈現了薪資與職能要求的關係。</strong>
+      TF-IDF 分析的初步觀察顯示，不支薪職缺的描述偏重媒體製作技能，
+      高薪月薪職缺的描述則偏重工程技術研發能力，兩者的語言生態明顯不同。
+    </p>
+    <div class="data-note red-border">
+      <strong>資料侷限聲明：</strong>本資料於 2026 年 5 月 24 日爬取自 104 人力銀行，
+      職缺刊登期間涵蓋 2026 年 2 月 10 日至 5 月 24 日（約 3.5 個月），且僅限該平台，
+      無法代表台灣全體暑期實習市場。
+      實際情況可能因不同平台、不同爬取時間點、或職缺下架更新而有所不同。
+    </div>
+  </section>
+
+
+  <!-- Footer ──────────────────────────────────── -->
+  <footer class="footer">
+    本報告為新聞資料分析課程作業（104 Job + Text Processing）成果。<br>
+    資料來源：104 人力銀行公開 API ｜ 爬取日期：2026-05-24 ｜ 資料筆數：434 筆（66 種產業）<br>
+    分析工具：Claude Sonnet 4.6（Anthropic）、Python 3、jieba、scikit-learn、Plotly<br>
+    完整操作過程記錄於 <code>LOG.md</code>；原始資料存於 <code>data/raw/</code>。<br>
+    <br>
+    本報告由洪嘉琪與 Claude Pro 共同完成。
+  </footer>
+
+</div><!-- /container -->
+</body>
+</html>

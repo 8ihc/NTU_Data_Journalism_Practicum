@@ -1,0 +1,267 @@
+---
+title: "AS04_join_edu_data"
+author: "Chia Chi Hong"
+editor_options: 
+  markdown: 
+    wrap: 72
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        toc_depth: 3
+        number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = 'hold', comment = '#>', error = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+library(showtext)
+library(stringr)
+# options(stringsAsFactors = F)
+
+font_add_google("Noto Sans TC", "NotoSans")
+showtext_auto()
+```
+
+這個作業希望你去處理教育相關資料，並和課堂中的公投資料串接，最後繪製出368個鄉鎮的教育程度與公投同意比例的相關散布圖（Scatter）。你會使用到兩筆資料，一個是教育資料`opendata107Y020.csv`，另一個是我們在課堂中操作過後所存下來的鄉鎮區等級的公投統計資料
+`town_ref_stat.rda`。這個教育資料和課程中的資料一樣，都是以村里為基礎且接近寬表格的資料。每個村裡會有一個15歲以上的人口總數（`edu_age_15up_total`）和各種不一樣的教育程度（教育程度分男性和女性分開統計）。
+
+這個作業分成三步驟，第一步驟是建立教育指標並彙整為鄉鎮市區等級的資料；第二步驟是將教育指標和公投指標串接；第三部分是繪製成Scatter以觀察教育指標和公投同意比例的相關性。
+
+# 1. Create edu indicator
+
+作業中要建立的指標是「**大學以上學歷佔學齡人口比例**」。除了15歲以上的人口總數（`edu_age_15up_total`）原本就有之外，你還要有一個數值是大學以上學歷人口數。才能夠計算出這個指標。
+
+## 1.1 Data cleaning
+
+1.  注意第一列是中文名，可以用`slice()`來將其skip掉。
+2.  不見得所有變項（Columns）都會用到，只要考慮能夠計算出大學以上學歷的人口數，把它加總起來就好。
+3.  目前的數字資料應該都是文字型態，要想辦法轉成數字型態。
+
+```{r}
+raw <- read_csv("data/AS04_opendata107Y020.csv") %>%
+    slice(-1)
+
+# View(raw)
+```
+
+```{r}
+# CODE HERE
+
+# names(raw)
+
+above_uni <- raw %>%
+    mutate_at(vars(5:50), as.numeric) %>% 
+    
+    rowwise() %>%
+    mutate(above_uni = sum(c_across(6:15))) %>%
+    
+    select(
+        site_id, 
+        village,
+        edu_age_15up_total,
+        above_uni,
+        edu_doctor_graduated_m,
+        edu_doctor_graduated_f,
+        edu_doctor_ungraduated_m,
+        edu_doctor_ungraduated_f,
+        edu_master_graduated_m,
+        edu_master_graduated_f,
+        edu_master_ungraduated_m,
+        edu_master_ungraduated_f,
+        edu_university_graduated_m,             
+        edu_university_graduated_f
+        ) %>%
+    ungroup()
+
+# View(above_uni)
+     
+```
+
+## 1.2 Village to town-level total people
+
+目前的資料已經有村里層級的十五歲以上學齡人口總數，可是屆時要計算出鄉鎮市區層級的大學比例，需要分開計算出鄉鎮市區層級的十五歲以上學齡人口總數，和鄉鎮市區層級的大學學歷以上人數，然後再進行相除。所以這個步驟要從1.1的結果中，計算出鄉鎮市區層級的學齡人口總數。
+
+```{r}
+# CODE HERE
+
+town_edu_15up <- above_uni %>%
+    mutate(site_id = str_replace(site_id, "三民一|三民二", "三民區")) %>%
+    mutate(site_id = str_replace(site_id, "鳳山一|鳳山二", "鳳山區")) %>%
+    group_by(site_id) %>% 
+    summarize(edu_age_15up_total = sum(edu_age_15up_total)) %>%
+    ungroup()
+
+head(town_edu_15up)
+
+# RESULT SHOULD LIKE THIS
+# # A tibble: 6 × 2
+#   site_id      eduTotal
+#   <chr>           <dbl>
+# 1 南投縣中寮鄉    13571
+# 2 南投縣仁愛鄉    13158
+# 3 南投縣信義鄉    13847
+# 4 南投縣南投市    87696
+# 5 南投縣名間鄉    34622
+# 6 南投縣國姓鄉    17132
+```
+
+## 1.3 Town-level people with university edu level
+
+這個階段是從**1.1**的結果（不是1.2歐，你想想），彙算出鄉鎮市區層級的大學以上人口數。
+
+```{r}
+# CODE HERE
+
+town_above_uni <- above_uni %>%
+    mutate(site_id = str_replace(site_id, "三民一|三民二", "三民區")) %>%
+    mutate(site_id = str_replace(site_id, "鳳山一|鳳山二", "鳳山區")) %>%
+    group_by(site_id) %>% 
+    summarize(above_uni = sum(above_uni)) %>%
+    ungroup()
+
+head(town_above_uni)
+
+## RESULT SHOULD LIKE ..
+# A tibble: 6 × 2
+#   site_id       univ
+#   <chr>        <dbl>
+# 1 南投縣中寮鄉  1719
+# 2 南投縣仁愛鄉  1343
+# 3 南投縣信義鄉  1633
+# 4 南投縣南投市 22957
+# 5 南投縣名間鄉  5871
+# 6 南投縣國姓鄉  2158
+```
+
+## 1.4 univPerc
+
+目前**1.2**和**1.3**分別產生兩個data.frame，一個是鄉鎮市區層級的學齡人口數，一個是鄉鎮市區層級的大學以上人數，請把他們join起來，然後計算出一個新的變項叫做`univPerc`，為鄉鎮市區層級的大學以上人口比例。
+
+```{r}
+# CODE HERE
+
+town_edu <- full_join(town_edu_15up, town_above_uni) %>%
+    rowwise() %>%
+    mutate(univPerc = round(above_uni / edu_age_15up_total, 3)) %>%
+    ungroup %>%
+    
+    # 處理「X區」中間有一全形空白「X　區」問題
+    mutate(site_id = str_replace(site_id, "　", ""))
+    
+
+head(town_edu)
+
+
+## RESULT SHOULD LIKE ..
+
+# A tibble: 6 × 4
+#   site_id       univ eduTotal univPerc
+#   <chr>        <dbl>    <dbl>    <dbl>
+# 1 南投縣中寮鄉  1719    13571    0.127
+# 2 南投縣仁愛鄉  1343    13158    0.102
+# 3 南投縣信義鄉  1633    13847    0.118
+# 4 南投縣南投市 22957    87696    0.262
+# 5 南投縣名間鄉  5871    34622    0.170
+# 6 南投縣國姓鄉  2158    17132    0.126
+```
+
+# 2. Join edu and ref data
+
+載入我們在課堂上準備好的鄉鎮市區層級的公投第十案同意比例檔案`town_ref_stat.rda`，然後串接1.4所產生的大學以上人口比例資料。
+
+```{r}
+load("data/AS04_town_ref_stat.rda", verbose = TRUE)
+
+to_plot <- full_join(town_ref_stat, town_edu, by = c("countytown" = "site_id")) %>%
+    mutate(ref10 = round(ref10, 3)) %>%
+    select(
+        countytown, 
+        ref10,
+        univPerc)
+
+head(to_plot)
+
+# CODE HERE
+# RESULT SHOULD BE ...
+# # A tibble: 6 × 3
+#   countytown   ref10 univPerc
+#   <chr>        <dbl>    <dbl>
+# 1 南投縣中寮鄉 0.750    0.127
+# 2 南投縣仁愛鄉 0.787    0.102
+# 3 南投縣信義鄉 0.809    0.118
+# 4 南投縣南投市 0.733    0.262
+# 5 南投縣名間鄉 0.721    0.170
+# 6 南投縣國姓鄉 0.754    0.126
+```
+
+# 3. Plot
+
+前述步驟2串接好的鄉鎮市區層級資料，應該有公投第十案的同意比例和大學學歷以上的人口比例，請把它繪製為Scatter。
+
+```{r}
+# CODE HERE
+
+to_plot %>% 
+    ggplot() +
+    
+    aes(ref10, univPerc) +
+    
+    geom_point(alpha = 0.5, color = "royalblue") +
+    
+    # 使用 check_overlap = TRUE 可以避免字體重疊太嚴重
+    geom_text(aes(label = countytown), vjust = 1.5, size = 3, check_overlap = TRUE) +
+
+    
+    theme_light(
+        base_family = "NotoSans", 
+        base_size = 15) +
+    
+    theme(legend.position = "none") +
+    
+    labs(
+        title = "學歷越高，對傳統婚姻定義的看法越不同？",
+        subtitle = "2018 年公投第 10 案「民法婚姻應限定一男一女」同意率與大學以上學歷人口佔比之相關性",
+        x = "公投第 10 案同意率 (0-1)",
+        y = "大學以上學歷人口比例 (0-1)",
+        caption = "資料來源：內政部戶政司、中選會；\n中選會數據由大數軟體 (www.LargitData.com) 整理") +
+    
+    theme(
+        plot.title = element_text(face = "bold", 
+                                  size = 25, 
+                                  margin = margin(b = 15))
+    )
+
+```
+
+# 4. Thinking
+
+上課的案例和本作業中，我們採取aggregate-data的方式分析公投第十案同意比例和人口變項（教育、年齡、結婚狀態）間的關係。請你觀看[2018年中華民國全國性公民投票 -
+維基百科，自由的百科全書](https://zh.wikipedia.org/zh-tw/2018%E5%B9%B4%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B%E5%85%A8%E5%9C%8B%E6%80%A7%E5%85%AC%E6%B0%91%E6%8A%95%E7%A5%A8)了解其他的公投案。第7、8、9、16等案都與能源相關，請嘗試構思並回答以下問題（請用Markdown格式接續撰寫）：
+
+1.  **你認為哪些人口變項可能會和能源議題有關？**
+
+    2018 年能源相關公投中的第 7、8、9 案領銜人皆為國民黨籍政治人物，而第
+    16 案的領銜人黃士修亦曾於 2015
+    年擔任國民黨籍洪秀柱的政策幕僚，這使得能源議題在成案之初就帶有強烈的**政黨色彩**。以我當年居住在中部鄉下的實際觀察為例，公投前夕幾乎家戶都能收到來自國民黨的「投票小抄」紙卡。當面對如核電是否算作「綠能」這類需要耗費大量時間查證的專業科學議題時，我跟長輩也很難就議題本身進行討論。此外，《報導者》針對
+    2018
+    公投的[解析](https://www.twreporter.org/a/2018-referendum-analysis-2)中也提及，在公投時程過於倉促下，「不但使得立場迥異的兩方無法取得理解或共識，最終投票只是淪為背號次而不用理解公投案內涵的另一種**『政治動員』**」。因此，我認為在分析能源公投時，可以採用
+    **2018
+    年各鄉鎮的九合一選舉結果**，來分析各政黨候選人得票率與公投結果的相關性。
+
+    此外，考量到第 7、8 案跟火力/燃煤發電廠相關，2018
+    年公投前各地也發起了多場反空汙大遊行（如[時代力量](https://www.facebook.com/newpowerparty/posts/2018%E5%8F%8D%E7%A9%BA%E6%B1%A1%E5%A4%A7%E9%81%8A%E8%A1%8C-%E6%99%82%E4%BB%A3%E5%8A%9B%E9%87%8F%E5%8C%97%E4%B8%AD%E5%8D%97%E4%B8%8D%E7%BC%BA%E5%B8%AD-%E6%88%91%E5%80%91%E7%9B%B8%E4%BF%A1%E5%91%BC%E5%90%B8%E6%96%B0%E9%AE%AE%E7%A9%BA%E6%B0%A3%E4%B8%8D%E6%87%89%E8%A9%B2%E6%98%AF%E4%B8%80%E7%A8%AE%E5%A5%A2%E6%B1%82%E4%BB%8A%E5%B9%B43%E6%9C%88%E7%A9%BA%E6%B1%A1%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%E9%80%B2%E5%85%A5%E5%A7%94%E5%93%A1%E6%9C%83%E5%AF%A9%E6%9F%A5%E5%85%B1%E7%B6%93%E9%81%8E%E4%B8%83%E6%AC%A1%E9%BB%A8%E5%9C%98%E5%8D%94%E5%95%86%E7%B5%82%E6%96%BC%E5%AE%8C%E6%88%90%E4%B8%89%E8%AE%80%E9%9D%9E%E5%B8%B8%E9%81%BA%E6%86%BE%E6%99%82%E4%BB%A3%E5%8A%9B%E9%87%8F/2448009835270358/)、[環保團體](https://www.cna.com.tw/news/ahel/201810240078.aspx)），因此就這兩案，我認為各縣市的**「空汙率」**亦是關鍵變項，也許能觀察到環境焦慮如何跨越黨派，驅動選民對特定能源政策投下同意票。
+
+2.  **根據你所規劃的人口變項的資料，上網找找看是否有相關的開放資料（通常都有），列出這些資料集的名稱與超鏈結。**
+
+    -   [選舉及公投資料庫](https://db.cec.gov.tw/ElecTable/Election?type=President)：點選
+        `選舉類別`（如縣市長）後再點選
+        `年份`（2018），可以下載各項統計表。
+    -   [環境部 空氣品質監測網
+        歷年監測資料](https://airtw.moenv.gov.tw/cht/Query/His_Data.aspx)：可以下載
+        2018 年各空品區、各測站的全年逐時資料。

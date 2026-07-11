@@ -1,0 +1,678 @@
+---
+title: "AS05_survey_presentation"
+author: "Chia Chi Hong"
+editor_options: 
+  markdown: 
+    wrap: 72
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        toc_depth: 3
+        number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = 'hold', comment = '#>', error = TRUE)
+```
+
+```{r}
+library(forcats) # 處理 factor 排序的好幫手
+library(cowplot)
+library(scales) # ✨ 新增這個套件：專門處理百分比與座標軸格式
+library(ggplot2)
+library(grid)
+library(readxl)
+library(tidyverse)
+library(showtext)
+library(stringr)
+# options(stringsAsFactors = F)
+
+# font_add_google("Noto Sans TC", "NotoSans")
+font_add_google("Roboto Condensed", "roboto_condensed")
+showtext_auto()
+
+# Define The Economist Design System
+econ_red <- "#E3120B" 
+econ_red60 <- "#F6423C"
+econ_red_tok90 <- "#F9D2DB"
+econ_blue_chi45 <- "#2E45B8"
+econ_grey_lon70 <- "#B3B3B3"    
+econ_canvas_los90 <- "#EBE9E0"
+text_lon10 <- "#1A1A1A"  
+caption <- "#595959"
+    
+```
+
+# Introduction
+
+在當今的台灣，對於「假訊息（Fake
+News）」的討論已成為日常。然而，民眾對於假訊息的焦慮程度究竟有多高？不同世代的群體，是否都同樣感受到假訊息的嚴重威脅？而當我們試圖揪出民眾認為的「造假元兇」時，不同教育程度與政治立場的選民，認知又是否一致？
+
+為了解答這些問題，本篇報導採用**「台灣事實查核中心 2023
+年假訊息年度調查」**之公開數據。本次分析萃取並重新編碼了以下八個核心變數：
+
+-   **影響認知：** `Q3` 覺得假訊息對社會的影響嚴不嚴重？
+
+-   **假消息來源（頻率評估）：**
+
+    -   `Q4_1` 媒體工作者
+
+    -   `Q4_2` 政治人物
+
+    -   `Q4_3` 一般民眾
+
+    -   `Q4_4` 境外勢力
+
+-   **社會人口特徵：**
+
+    -   `QA3` 年齡
+
+    -   `QA4` 最高學歷
+
+    -   `QASide` 政黨傾向
+
+接下來的篇幅，將呈現數據清理、資料分析與製圖過程。
+
+（以上文字為 Gemini 協助撰寫第一版後，再經由我編輯。）
+
+# Data
+
+## Data cleaning
+
+```{r}
+raw <- read_csv("data/AS05_tfc_2023.csv")
+# View(raw)
+```
+
+```{r}
+clean <- raw %>%
+  slice(-1) %>%
+  
+  select(
+    Q3, 
+    Q4_1, Q4_2, Q4_3, Q4_4,
+    QASide,
+    QA3,
+    QA4,
+    QA16) %>% 
+  
+  mutate(across(everything(), as.numeric)) %>%
+  
+  mutate(
+    # Q3 (假消息嚴重程度)
+    Q3_factor = factor(Q3,
+                       levels = c(1, 2, 3, 4), 
+                       labels = c("一點也不嚴重", "不嚴重", "嚴重", "非常嚴重"), 
+                       ordered = TRUE),
+    
+    # QASide：政黨傾向 (排除 99 拒答，並按照藍綠光譜排序)
+    QASide_factor = factor(QASide,
+                           levels = c(1, 4, 3, 5, 2), 
+                           labels = c("非常接近泛藍", "接近泛藍", "都不接近", "接近泛綠", "非常接近泛綠")),
+    
+    # QA3：年齡
+    QA3_factor = factor(QA3,
+                        levels = 1:12,
+                        labels = c("19及以下", "20-24", "25-29", "30-34", "35-39", 
+                                   "40-44", "45-49", "50-54", "55-59", "60-64", 
+                                   "65-69", "70及以上"),
+                        ordered = TRUE),
+    
+    # QA4：最高學歷 (排除99拒答) 
+    QA4_factor = factor(QA4,
+                        levels = 1:5,
+                        labels = c("國小及以下", "國中", "高中職", "大專", "研究所及以上"),
+                        ordered = TRUE),
+    
+    # QA16：疫苗劑量
+    QA16_factor = factor(QA16,
+                         levels = 1:7,
+                         labels = c("沒有接種", "1劑", "2劑", "3劑", "4劑", "5劑", "6劑以上"),
+                         ordered = TRUE)
+    ) 
+
+head(clean)
+
+# anyNA(clean) # False
+
+# Q4_1 到 Q4_4, long form，for Stacked Bar chart
+q4_long <- clean %>%
+    select(Q4_1:Q4_4) %>%
+    
+    pivot_longer(cols = everything(), names_to = "Source", values_to = "Frequency") %>%
+    
+    mutate(
+        Source = factor(Source, 
+                        levels = c("Q4_1", "Q4_2", "Q4_3", "Q4_4"),
+                        labels = c("媒體工作者", "政治人物", "一般民眾", "境外勢力")),
+    
+        Frequency_factor = factor(Frequency,
+                              levels = c(1, 2, 3, 4),
+                              labels = c("從未製造", "偶而", "經常", "每天"),
+                              ordered = TRUE)
+  )
+
+head(q4_long)
+```
+
+## Recode
+
+從次數與百分比分布，確認是否簡化各題 Levels 與 Labels
+
+### Q3 假消息嚴重程度
+
+```{r}
+table(clean$Q3_factor)
+prop.table(table(clean$Q3_factor)) %>% round(3)
+```
+
+### QASide 政黨傾向
+
+```{r}
+table(clean$QASide_factor)
+prop.table(table(clean$QASide_factor)) %>% round(3)
+```
+
+### QA3 年齡
+
+```{r}
+table(clean$QA3_factor)
+prop.table(table(clean$QA3_factor)) %>% round(3)
+```
+
+### QA4 最高學歷
+
+```{r}
+table(clean$QA4_factor)
+prop.table(table(clean$QA4_factor)) %>% round(3)
+```
+
+### QA16 疫苗劑量
+
+```{r}
+table(clean$QA16)
+prop.table(table(clean$QA16)) %>% round(3)
+```
+
+### Recode
+
+```{r}
+clean_recode <- clean %>%
+    mutate(
+        # Q3：合併不嚴重的極端值
+        Q3_factor = fct_collapse(Q3_factor,
+                                 "不嚴重" = c("一點也不嚴重", "不嚴重"),
+                                 "嚴重" = "嚴重",
+                                 "非常嚴重" = "非常嚴重"),
+        
+        # QASide：先清掉0人的類別，再合併成兩大陣營
+        QASide_factor = fct_drop(QASide_factor),
+        # QASide_factor = fct_collapse(QASide_factor,
+        #                              "泛藍" = c("非常接近泛藍", "接近泛藍"),
+        #                              "泛綠" = c("接近泛綠", "非常接近泛綠")),
+        
+        # QA3：清除0人世代，並合併為10歲區間
+        QA3_factor = fct_drop(QA3_factor),
+        QA3_factor = fct_collapse(QA3_factor,
+                                  "20-29" = c("20-24", "25-29"),
+                                  "30-39" = c("30-34", "35-39"),
+                                  "40-49" = c("40-44", "45-49"),
+                                  "50-59" = c("50-54", "55-59"),
+                                  "60-69" = c("60-64", "65-69"),
+                                  "70+" = "70及以上"),
+        
+        # QA4：學歷合併
+        QA4_factor = fct_collapse(QA4_factor,
+                                  "高中職及以下" = c("國小及以下", "國中", "高中職"),
+                                  "大專" = "大專",
+                                  "研究所及以上" = "研究所及以上"),
+        
+        # QA16：疫苗合併
+        QA16_factor = fct_collapse(QA16_factor,
+                                   "沒有接種" = "沒有接種",
+                                   "1或2劑" = c("1劑", "2劑"),
+                                   "3劑以上" = c("3劑", "4劑", "5劑", "6劑以上")),
+        
+     
+        across(Q4_1:Q4_4, ~factor(.x, levels = c(1, 2, 3, 4), 
+                                      labels = c("Never", "Occasionally", "Often", "Daily"), 
+                                      ordered = TRUE), .names = "{.col}_en")) %>%
+    
+    select(
+        Q3_factor,
+        QASide_factor,
+        QA3_factor,
+        QA4_factor,
+        QA16_factor,
+        Q4_1_en:Q4_4_en)
+
+head(clean_recode)
+```
+
+# Results
+
+## 請問您覺得假消息對社會的影響嚴不嚴重？（Q3）
+
+```{r}
+q3_en_summary <- clean_recode %>%
+    count(Q3_factor, name = "count") %>%
+    mutate(
+        pct = count / sum(count),
+        Q3_en = case_when(
+            Q3_factor == "不嚴重" ~ "Not serious",
+            Q3_factor == "嚴重" ~ "Serious",
+            Q3_factor == "非常嚴重" ~ "Very serious"),
+        Q3_en = fct_reorder(Q3_en, pct, .desc = F))
+
+q3_en_summary
+```
+
+```{r}
+plot_q3_en <- 
+    ggplot(
+        q3_en_summary, 
+        aes(x = pct, y = Q3_en, fill = Q3_en)) + 
+  
+    geom_col(width = 0.6) + 
+  
+    scale_fill_manual(values = c("Serious" = econ_red, 
+                                 "Very serious" = econ_blue_chi45, 
+                                 "Not serious" = econ_grey_lon70))  +
+  
+    # X 軸百分比格式
+    scale_x_continuous(labels = percent_format(accuracy = 1),
+                       expand = expansion(mult = c(0, 0.1))) +
+  
+  
+    # 英文標題與說明
+    labs(
+        title = "A clear majority sees fake news as a serious threat",
+        subtitle = "How serious is the impact of fake news on society? (% responding)", 
+        x = NULL, y = NULL, 
+        caption = "Source: 2023 Taiwan FactCheck Center Survey") +
+  
+  
+    theme_minimal() + 
+  
+    theme(
+    
+        text = element_text(family = "roboto_condensed", color = text_lon10),
+    
+        legend.position = "none",
+    
+        plot.title = element_text(face = "bold", 
+                                  size = 30, 
+                                  hjust = 0, 
+                                  margin = margin(t = 15, b = 5)),
+    
+        plot.subtitle = element_text(size = 20, 
+                                     hjust = 0, 
+                                     margin = margin(b = 20)),
+    
+        plot.caption = element_text(size = 15, 
+                                    color = caption, 
+                                    hjust = 0, 
+                                    margin = margin(t = 15)),
+    
+   
+        # 座標軸文字
+        axis.text.y = element_text(size = 20, color = text_lon10),
+        axis.text.x = element_text(size = 20, color = text_lon10),
+    
+    
+        # 網格與背景
+        panel.grid.major.x = element_line(color = econ_grey_lon70, size = 0.5),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = econ_canvas_los90, color = NA),
+        panel.background = element_rect(fill = econ_canvas_los90, color = NA),
+        plot.margin = margin(t = 25, r = 20, b = 20, l = 20)
+        )
+
+plot_q3_en
+```
+
+## 請問您覺得假消息對社會的影響嚴不嚴重？（Q3）X 年紀（QA3）
+
+```{r}
+cross_age_data <- clean_recode %>%
+    mutate(
+        Age = as.character(QA3_factor),
+        Age = case_when(
+            Age == "20-29" ~ "20-29",
+            Age == "30-39" ~ "30-39",
+            Age == "40-49" ~ "40-49",
+            Age == "50-59" ~ "50-59",
+            Age == "60-69" ~ "60-69", 
+            Age == "70+" ~ "70+"),
+        Age = factor(Age, levels = c("20-29", "30-39", "40-49", "50-59", "60-69", "70+")),
+    
+        Severity_en = case_when(
+            Q3_factor == "不嚴重" ~ "Not serious",
+            Q3_factor == "嚴重" ~ "Serious",
+            Q3_factor == "非常嚴重" ~ "Very serious"),
+        Severity_en = factor(Severity_en, levels = c("Not serious", "Serious", "Very serious"), ordered = TRUE)
+  ) %>%
+    
+  count(Age, Severity_en) %>%
+  group_by(Age) %>%
+  mutate(pct = n / sum(n)) %>%
+  ungroup()
+
+cross_age_data
+
+```
+
+```{r}
+plot_age_vertical <- ggplot(
+    cross_age_data, 
+    aes(x = Age, y = pct, fill = Severity_en)) + 
+  
+    geom_col(width = 0.6) + 
+  
+    scale_fill_manual(values = c("Very serious" = econ_red,
+                                 "Serious" = econ_red_tok90,
+                                 "Not serious" = econ_grey_lon70)) +
+  
+    scale_y_continuous(labels = percent_format(accuracy = 1), expand = c(0, 0.1)) +
+  
+    labs(
+        title = "Perceived severity of fake news by age group (% responding)",
+        x = NULL, y = NULL, 
+        caption = "Source: 2023 Taiwan FactCheck Center Survey") +
+  
+    theme_minimal() + 
+    
+    theme(
+        text = element_text(family = "roboto_condensed", color = text_lon10),
+        
+        legend.position = "top",
+        legend.justification = "left",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 20),
+        legend.color = text_lon10,
+        
+        plot.title = element_text(face = "bold", 
+                                  size = 30, 
+                                  hjust = 0, 
+                                  margin = margin(t = 15, b = 5)),
+        
+        plot.caption = element_text(size = 15,
+                                    color = caption, 
+                                    hjust = 0, 
+                                    margin = margin(t = 15)),
+    
+        axis.text.x = element_text(size = 20, color = text_lon10),
+        axis.text.y = element_text(size = 20, color = text_lon10),
+    
+        panel.grid.major.y = element_line(color = econ_grey_lon70, size = 0.3),
+        panel.grid.major.x = element_blank(),
+    
+        plot.background = element_rect(fill = econ_canvas_los90, color = NA),
+        panel.background = element_rect(fill = econ_canvas_los90, color = NA),
+        plot.margin = margin(t = 25, r = 20, b = 20, l = 20)
+        )
+
+plot_age_vertical
+```
+
+## 請問您認為以下個人或團體是否經常在製造假消息？（Q4_1 - Q4_4）
+
+Q4_1 到 Q4_4
+題目中的「個人或團體」分別指媒體工作者、政治人物、一般民眾、境外勢力。
+
+```{r}
+q4_summary_pct <- q4_long %>%
+    
+    mutate(
+        Source_en = case_when(
+        Source == "媒體工作者" ~ "News Media",
+        Source == "政治人物" ~ "Politicians",
+        Source == "一般民眾" ~ "Citizens",
+        Source == "境外勢力" ~ "Foreign Forces"
+        ),
+    
+    Freq_en = case_when(
+        Frequency_factor == "從未製造" ~ "Never",
+        Frequency_factor == "偶而" ~ "Occasionally",
+        Frequency_factor == "經常" ~ "Often",
+        Frequency_factor == "每天" ~ "Daily"
+        ),
+    
+    Freq_en = factor(Freq_en, 
+                     levels = c("Never", "Occasionally", "Often", "Daily"), 
+                     ordered = TRUE)) %>%
+  
+    # 計算每個 Source 裡面的百分比
+    count(Source_en, Freq_en) %>%
+    group_by(Source_en) %>%
+    mutate(pct = n / sum(n)) %>%
+    ungroup()
+
+q4_summary_pct
+```
+
+```{r}
+plot_q4_stacked <- 
+    ggplot(
+        q4_summary_pct, 
+        aes(x = pct, y = Source_en, fill = Freq_en)) + 
+  
+    geom_col(width = 0.6) + 
+  
+    scale_fill_manual(values = c("Daily" = econ_red,
+                                 "Often" = econ_red60,
+                                 "Occasionally" = econ_red_tok90,
+                                 "Never" = econ_grey_lon70)) +
+    
+    scale_x_continuous(labels = percent_format(accuracy = 1),
+                       expand = expansion(mult = c(0, 0.1))) +
+  
+    labs(
+        title = "Politicians, the media, and foreign forces share the blame",
+        subtitle = "How often do you think the following groups create fake news? (% responding)", 
+        x = NULL, y = NULL, 
+        caption = "Source: 2023 Taiwan FactCheck Center Survey") +
+    
+    theme_minimal() + 
+    
+    theme(text = element_text(family = "roboto_condensed", color = text_lon10),
+    
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 20),
+    legend.color = text_lon10,
+    # legend.margin = margin(b = -10), # 縮小圖例跟圖表之間的距離
+    
+    plot.title = element_text(face = "bold", 
+                              size = 30, 
+                              hjust = 0, 
+                              margin = margin(t = 15, b = 5)),
+    
+    plot.subtitle = element_text(size = 20, 
+                                 hjust = 0, 
+                                 margin = margin(b = 20)),
+    
+    plot.caption = element_text(size = 15,
+                                color = caption, 
+                                hjust = 0, 
+                                margin = margin(t = 15)),
+    
+    axis.text.y = element_text(size = 20, color = text_lon10),
+    axis.text.x = element_text(size = 20, color = text_lon10),
+    
+    panel.grid = element_blank(),   
+    plot.background = element_rect(fill = econ_canvas_los90, color = NA),
+    panel.background = element_rect(fill = econ_canvas_los90, color = NA),
+    plot.margin = margin(t = 25, r = 20, b = 20, l = 20)
+    )
+
+plot_q4_stacked
+```
+
+## 請問您認為以下個人或團體是否經常在製造假消息？ - 境外勢力（Q4_4）X 政黨傾向（QASide）
+
+```{r}
+cross_politics_foreign <- clean_recode %>%
+    mutate(
+    
+        Politics_en = case_when(
+            QASide_factor == "非常接近泛藍" ~ "Strong KMT",
+            QASide_factor == "接近泛藍" ~ "Lean KMT",
+            QASide_factor == "接近泛綠" ~ "Lean DPP",
+            QASide_factor == "非常接近泛綠" ~ "Strong DPP"),
+        Politics_en = factor(Politics_en, levels = c("Strong DPP", "Lean DPP", "Strong KMT", "Lean KMT"))) %>%
+    
+    count(Politics_en, Q4_4_en) %>%
+    group_by(Politics_en) %>%
+    mutate(pct = n / sum(n)) %>%
+    ungroup()
+
+cross_politics_foreign
+```
+
+```{r}
+plot_partisan_gap <- 
+    ggplot(
+        cross_politics_foreign, 
+        aes(x = pct, y = fct_rev(Politics_en), fill = Q4_4_en)) + 
+  
+    geom_col(width = 0.6) + 
+  
+    scale_fill_manual(values = c("Daily" = econ_red,
+                                 "Often" = econ_red60,
+                                 "Occasionally" = econ_red_tok90,
+                                 "Never" = econ_grey_lon70)) +
+    
+    scale_x_continuous(labels = percent_format(accuracy = 1),
+                       expand = expansion(mult = c(0, 0.1))) +
+
+    labs(
+        title = "Over half of strong DPP supporters see foreign fake news as a daily threat",
+        subtitle = "Perceived frequency of foreign forces creating fake news, by partisan leaning (% responding)",
+        x = NULL, y = NULL, 
+        caption = "Source: 2023 Taiwan FactCheck Center Survey") +
+  
+    theme_minimal() + 
+  
+    theme(
+        text = element_text(family = "roboto_condensed", color = text_lon10),
+    
+        legend.position = "top",
+        legend.justification = "left",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 20),
+        legend.color = text_lon10,
+        
+        plot.title = element_text(face = "bold", 
+                                  size = 30,
+                                  hjust = 0, 
+                                  margin = margin(t = 15, b = 5)),
+    
+        plot.subtitle = element_text(size = 20, 
+                                     hjust = 0, 
+                                     margin = margin(b = 20)),
+    
+        plot.caption = element_text(size = 15,
+                                    color = caption,
+                                    hjust = 0, 
+                                    margin = margin(t = 15)),
+    
+        axis.text.y = element_text(size = 20, color = text_lon10),
+        axis.text.x = element_text(size = 20, color = text_lon10),
+    
+        panel.grid = element_blank(),
+        plot.background = element_rect(fill = econ_canvas_los90, color = NA),
+        panel.background = element_rect(fill = econ_canvas_los90, color = NA),
+        plot.margin = margin(t = 25, r = 20, b = 20, l = 20)
+  )
+
+plot_partisan_gap
+```
+
+## 請問您認為以下個人或團體是否經常在製造假消息？ - 政治人物（Q4_2）X 最高學歷（QA4）
+
+```{r}
+cross_edu_politicians <- clean_recode %>%
+    # 回答 Never 的人比例太低
+    filter(Q4_2_en != "Never") %>%
+    
+    mutate(
+        Edu_en = case_when(
+            QA4_factor == "高中職及以下" ~ "High school or below",
+            QA4_factor == "大專" ~ "College",
+            QA4_factor == "研究所及以上" ~ "Graduate or above"),
+    
+        Edu_en = factor(Edu_en, levels = c("Graduate or above", "College", "High school or below" ), 
+                        ordered = TRUE),
+        
+        Q4_2_en = fct_drop(Q4_2_en)) %>%
+    
+    count(Edu_en, Q4_2_en) %>%
+    group_by(Edu_en) %>%
+    mutate(pct = n / sum(n)) %>%
+    ungroup()
+
+cross_edu_politicians
+
+```
+
+```{r}
+plot_edu_gap <- 
+    ggplot(
+        cross_edu_politicians, 
+        aes(x = pct, y = fct_rev(Edu_en), fill = Q4_2_en)) +
+    
+    geom_col(width = 0.6) +
+    
+    scale_fill_manual(values = c("Daily" = econ_red,
+                                 "Often" = econ_red60,
+                                 "Occasionally" = econ_red_tok90)) +
+                          
+    scale_x_continuous(labels = percent_format(accuracy = 1),
+                       expand = expansion(mult = c(0, 0.1))) +
+  
+    labs(
+        title = "Does higher education breed political cynicism?",
+        subtitle = "Perceived frequency of politicians creating fake news, by education level (% responding)", 
+        x = NULL, y = NULL, 
+        caption = "Source: 2023 Taiwan FactCheck Center Survey") +
+  
+    theme_minimal() + 
+  
+    theme(
+        text = element_text(family = "roboto_condensed", color = text_lon10),
+    
+        legend.position = "top",
+        legend.justification = "left",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 20),
+        legend.color = text_lon10,
+        
+        plot.title = element_text(face = "bold", 
+                                  size = 30,
+                                  hjust = 0, 
+                                  margin = margin(t = 15, b = 5)),
+    
+        plot.subtitle = element_text(size = 20, 
+                                     hjust = 0, 
+                                     margin = margin(b = 20)),
+    
+        plot.caption = element_text(size = 15,
+                                    color = caption,
+                                    hjust = 0, 
+                                    margin = margin(t = 15)),
+    
+        axis.text.y = element_text(size = 20, color = text_lon10),
+        axis.text.x = element_text(size = 20, color = text_lon10),
+    
+        panel.grid = element_blank(),
+        plot.background = element_rect(fill = econ_canvas_los90, color = NA),
+        panel.background = element_rect(fill = econ_canvas_los90, color = NA),
+        plot.margin = margin(t = 25, r = 20, b = 20, l = 20)
+        )
+
+plot_edu_gap
+```

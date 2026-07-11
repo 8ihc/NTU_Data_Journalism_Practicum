@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+AgriData/venv/
+
+# Operation logs
+AgriData/LOG.md
+104_Job_Data/LOG.md
+
+# R
+.Rhistory
+.RData
