@@ -8,7 +8,7 @@
 ## 課程專題 Course Projects
 
 ### 🥬 小吃店的燙青菜為什麼老是那幾種？
-**[AgriData/](AgriData/REPORT.html)**
+**[AgriData/](https://github.com/8ihc/NTU_Data_Journalism_Practicum/tree/main/AgriData)**
 
 從農業部批發市場交易資料，用資料分析解答一個日常觀察。
 
@@ -27,7 +27,7 @@
 ---
 
 ### 💼 電視業暑期實習，100% 不支薪
-**[104_Job_Data/](104_Job_Data/REPORT.html)**
+**[104_Job_Data/](https://github.com/8ihc/NTU_Data_Journalism_Practicum/tree/main/104_Job_Data)**
 
 爬取 104 人力銀行 434 筆暑期實習職缺，分析台灣各產業實習薪資結構的落差。
 
