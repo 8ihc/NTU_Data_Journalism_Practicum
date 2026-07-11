@@ -16,7 +16,7 @@
 
 **技術亮點**：自製爬蟲模擬 ASP.NET WebForms POST 請求、Plotly 互動式視覺化（散點圖、排行長條圖、季節熱圖）、交易量加權均價與變異係數設計
 
-→ **[查看完整報告 REPORT.html](AgriData/REPORT.html)**
+→ **[查看完整報告 REPORT.html](https://8ihc.github.io/NTU_Data_Journalism_Practicum/AgriData/REPORT.html)**
 
 ---
 
@@ -35,7 +35,7 @@
 
 **技術亮點**：104 官方 API 兩階段爬蟲、jieba 中文斷詞、TF-IDF 跨組關鍵詞熱力圖、Plotly Treemap
 
-→ **[查看完整報告 REPORT.html](104_Job_Data/REPORT.html)**
+→ **[查看完整報告 REPORT.html](https://8ihc.github.io/NTU_Data_Journalism_Practicum/104_Job_Data/REPORT.html)**
 
 ---
 
@@ -49,11 +49,11 @@
 
 | 作業 | 主題 | 資料來源 |
 |------|------|----------|
-| [AS01](assignments/AS01_google_trend.html) | Google Trends 趨勢視覺化 | Google Trends |
-| [AS02](assignments/AS02_counting_data.html) | 進口違規品項計數 ＋ 蔬果農藥殘留 | 食藥署、衛福部 |
-| [AS03](assignments/AS03_know-your-data.html) | 家庭消費支出 ＋ 各鄉鎮人口密度 | 主計總處、內政部 |
-| [AS04](assignments/AS04_join_edu_data.html) | 教育資料合併分析 | 教育部 |
-| [AS05](assignments/AS05_survey_presentation.html) | 問卷資料分析與呈現 | 課堂調查資料 |
+| [AS01](https://8ihc.github.io/NTU_Data_Journalism_Practicum/assignments/AS01_google_trend.html) | Google Trends 趨勢視覺化 | Google Trends |
+| [AS02](https://8ihc.github.io/NTU_Data_Journalism_Practicum/assignments/AS02_counting_data.html) | 進口違規品項計數 ＋ 蔬果農藥殘留 | 食藥署、衛福部 |
+| [AS03](https://8ihc.github.io/NTU_Data_Journalism_Practicum/assignments/AS03_know-your-data.html) | 家庭消費支出 ＋ 各鄉鎮人口密度 | 主計總處、內政部 |
+| [AS04](https://8ihc.github.io/NTU_Data_Journalism_Practicum/assignments/AS04_join_edu_data.html) | 教育資料合併分析 | 教育部 |
+| [AS05](https://8ihc.github.io/NTU_Data_Journalism_Practicum/assignments/AS05_survey_presentation.html) | 問卷資料分析與呈現 | 課堂調查資料 |
 
 所有作業使用 R（tidyverse、ggplot2）撰寫，原始碼為 `.Rmd` 格式。
 
